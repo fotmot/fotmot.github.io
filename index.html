@@ -1,1 +1,70 @@
-under construction
+<!DOCTYPE html>
+<!--
+Kazakov Ivan
+mail@x-noname.ru
+-->
+<html>
+<head>
+    <title>Фоторамка для планшета с поддержкой видео и motion photo(Samsung)</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/stat.png">
+    <link rel="apple-touch-icon image_src" href="img/stat.png">
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="css/confirm.css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/yad.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
+    <script src="js/init.js"></script>
+
+</head>
+<body>
+<div id="content"></div>
+<div id="menu"><img class="controls params" src="img/params.png" alt="Settings"/></div>
+<div id="menuitems" style="display:none">
+    <ul>
+        <li id="delete"><img class="controls delete" src="img/trashcan.png" alt="delete"/></li>
+        <li id="plpa"><img class="controls stop" src="img/pause.png" alt="Stop"/></li>
+        <li id="next"><img class="controls next" src="img/next.png" alt="Next photo"/></li>
+        <li id="folder"><img class="controls folder" src="img/folder.png"/></li>
+        <li id="imgstyle"><img class="controls expand" src="img/expand.png" alt="Crop"/></li>
+        <li id="movie"><img class="controls" src="img/stat.png" alt="Vertical crop"/></li>
+    </ul>
+</div>
+
+<div id="invisible" style="display:none">
+    <img id="imgcache" src="" alt="none"/>
+</div>
+<div id="popup1" class="cd-popup" role="alert">
+    <div class="cd-popup-container">
+        <p id="title">Вы точно хотите удалить файл?</p>
+        <img id="delprev" src="" alt="Preview"/>
+        <ul class="cd-buttons">
+            <li><a href="#" class="but-yes">Да</a></li>
+            <li><a href="#" class="but-close">Нет</a></li>
+        </ul>
+        <a href="#" class="cd-popup-close img-replace"> </a>
+    </div> <!-- cd-popup-container -->
+</div> <!-- cd-popup -->
+<div id="popup2" class="cd-popup" role="alert">
+    <div class="cd-popup-container">
+        <p>Выбор папки</p>
+        <small>Из-за ограничений REST API Яндекса будут отображаться только те файлы, которые находятся в корне папки.
+            Или подготовьте специальную папку с фотографиями, или используйте папку автозагрузки фотографий с телефона
+            (Используется по умолчанию)
+        </small>
+        <br/>
+        <select id="selectfolders">
+            <option value="-1">Выбрать папку</option>
+        </select>
+
+        <ul class="cd-buttons">
+            <li><a href="#" class="but-yes">Да</a></li>
+            <li><a href="#" class="but-close">Нет</a></li>
+        </ul>
+        <a href="#" class="cd-popup-close img-replace"> </a>
+    </div> <!-- cd-popup-container -->
+</div>
+
+</body>
+</html>
