@@ -327,7 +327,11 @@ function showPhotoOrVideo(mediaObject, content) {
                     video[0].loop = true;
                     video[0].defaultPlaybackRate = 0.4;
                     video[0].playbackRate = 0.4;
-                    video[0].play();
+
+                    video[0].addEventListener('progress', function(evt){
+                        video[0].play();
+                    }, false);
+
                 } else {
                     var img = $("<div/>", {
                         class: 'img',
