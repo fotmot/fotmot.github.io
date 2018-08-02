@@ -66,7 +66,7 @@ ul {
     padding: 0;
 }
 
-li {
+#menuitems  li {
     margin: 0;
     padding: 0;
     display: block;
@@ -90,38 +90,41 @@ div.date {
     margin-left: -2%;
 }
 
-@media all and (max-height: 400px) {
-    li, #menu > img {
-        width: 32px;
-    }
+div#confirm {
+    font-size: 18px;
+    right: 70px;
+    padding: 5px;
+}
 
-    div#confirm {
-        font-size: 18px;
-        right: 70px;
-        padding: 5px;
-    }
+input[type="button"] {
+    font-size: 18px;
+}
 
-    input[type="button"] {
-        font-size: 18px;
+@media (min-height: 500px) and (max-height: 620px) {
+    #menuitems li, #menu > img {
+        width: 48px;
     }
 }
 
-@media all and (max-width: 400px) {
-    li, #menu > img {
+@media (min-height: 380px) and (max-height: 499px) {
+    #menuitems li, #menu > img {
         width: 32px;
     }
-
-    div#confirm {
-        font-size: 18px;
-        right: 70px;
-        padding: 5px
-    }
-
-    input[type="button"] {
-        font-size: 18px;
-    }
-
 }
+
+@media (min-height: 300px) and (max-height: 379px) {
+    #menuitems li, #menu > img {
+        width: 24px;
+    }
+}
+
+@media  (max-height: 299px) {
+    #menuitems li, #menu > img {
+        width: 16px;
+    }
+}
+
+
 
 .controls {
     filter: invert(50%);
@@ -219,7 +222,7 @@ xpopup
 .cd-popup-container {
     position: relative;
     width: 90%;
-    max-width: 400px;
+    max-width: 600px;
     margin: 4em auto;
     background: #FFF;
     border-radius: .25em .25em .4em .4em;
@@ -268,6 +271,7 @@ xpopup
 .cd-popup-container .cd-buttons li {
     float: left;
     width: 50%;
+    list-style: none;
 }
 
 .cd-popup-container .cd-buttons a {
@@ -346,4 +350,9 @@ xpopup
     .cd-popup-container {
         margin: 8em auto;
     }
+}
+
+#popup3 ul {
+    margin-left: 30px;
+    text-align: left;
 }

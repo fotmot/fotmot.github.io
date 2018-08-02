@@ -4,6 +4,7 @@
  */
 
 var isPaused = false;
+var isDebug = true;
 var folder;
 var total;
 var timerId;
@@ -104,6 +105,7 @@ function setFolder(fld) {
             total = data._embedded.total;
             folder = fld;
             setSettings('folder', folder);
+            trash = [];
         });
 }
 
@@ -177,6 +179,8 @@ function setSettings(key, value) {
 
 var usedPos = [];
 
+var trash = [];
+
 function showRandom() {
     if (isPaused) return;
     var pos = Math.floor(Math.random() * total + 1);
@@ -193,19 +197,29 @@ function showRandom() {
     })
         .done(function (data) {
 
-            if (data._embedded.items[0]) {
+            if(data._embedded.items.length===0){
+                alert("В указанной папке нет файлов");
+                $("#folder").click();
+                return;
+            }
+
+            if(isDebug)console.log(data._embedded.items);
+
+            if (data._embedded.items[0] && (data._embedded.items[0].media_type === 'image'
+                    || data._embedded.items[0].media_type === 'video') ) {
                 var name = data._embedded.items[0].name;
                 var file = data._embedded.items[0].file;
                 var path = data._embedded.items[0].path;
                 var size = data._embedded.items[0].size;
                 var date_time = data._embedded.items[0].exif.date_time;
                 var preview = data._embedded.items[0].preview;
+                checkAutorization(preview);
                 var media_type = data._embedded.items[0].media_type;
                 var content = $("#content");
 
                 content.data('path', path);
                 content.data('preview', preview);
-                $("#delprev").attr('src', preview);
+
                 //              if(media_type==="image")cache.attr('src',file);
                 if (date_time) {
                     var d = new Date(date_time);
@@ -227,6 +241,9 @@ function showRandom() {
                 } else {
                     showRandom();
                 }
+            }else {
+                console.log('Посторонние файлы в каталоге');
+                trash[data._embedded.items[0].name]=1;
             }
         });
 }
@@ -235,8 +252,18 @@ function getFiles() {
     q('GET', '/disk/resources', {path: folder, fields: '_embedded.total'})
         .done(function (data) {
             total = data._embedded.total;
+            if(total===0 || total == trash.length){
+                alert("В указанной папке нет файлов");
+                $("#folder").click();
+                return;
+            }
             showRandom();
-        });
+        })
+        .fail(function () {
+            console.log("asdadasd");
+            $("#folder").click();
+        })
+    ;
 }
 
 function getFolders() {
@@ -245,9 +272,11 @@ function getFolders() {
             if (data.system_folders.photostream) {
                 if (getSettings('folder')) {
                     folder = getSettings('folder');
+                    trash = [];
                 } else {
                     folder = data.system_folders.photostream;
                     setSettings('folder', folder);
+                    trash = [];
                 }
                 photoFolder = data.system_folders.photostream;
                 getFiles();
@@ -267,18 +296,20 @@ function updateContainer(content, newNode) {
 
 
 function showPhotoOrVideo(mediaObject, content) {
+    if(isDebug)console.log(mediaObject.media_type, mediaObject.size, isPlayMove);
     if (mediaObject.media_type === "image" && mediaObject.size > 1.5 * 1024 * 1024 && isPlayMove) {
         var xhr = new XMLHttpRequest();
         xhr.timeout = 25000;
         xhr.open('GET', mediaObject.file, true);
         xhr.responseType = 'arraybuffer';
         xhr.ontimeout = function (e) {
-            console.log("TimeOut reached");
+            if(isDebug)console.log("TimeOut reached");
         };
         xhr.onload = function (e) {
             if (this.status === 206 || this.status === 200) {
                 var byteArray = new Uint8Array(this.response);
                 var index = findIndex(byteArray);
+                if(isDebug)console.log('index=',index);
                 if (index >= 0) {
                     var videoArray = byteArray.slice(index);
                     var blobVideo = new Blob([videoArray], {type: 'video/h264'});
@@ -367,4 +398,28 @@ function disableMove() {
         setSettings('motion', false);
     }
 }
+
+function checkAutorization(link) {
+
+    if(typeof link === "undefined"){
+        return;
+    }
+    //$("#delprev").attr('src', link);
+
+    var request = new XMLHttpRequest();
+    request.open('GET', link, true);
+    request.onreadystatechange = function(){
+        if (request.readyState === 4) {
+            if (request.status === 403 || request.status === 0) {
+                window.location = 'autorize.html';
+            }else {
+                console.log(request.status);
+            }
+        }
+    };
+    request.send();
+
+
+}
+
 

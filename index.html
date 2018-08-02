@@ -5,7 +5,7 @@ mail@x-noname.ru
 -->
 <html>
 <head>
-    <title>Фоторамка для планшета с поддержкой видео и motion photo(Samsung)</title>
+    <title>Фоторамка для Яндекс.Диска с поддержкой видео и Motion Photo(Samsung)</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/stat.png">
@@ -19,6 +19,23 @@ mail@x-noname.ru
 
 </head>
 <body>
+<!-- Rating@Mail.ru counter -->
+<script type="text/javascript">
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({id: "3050612", type: "pageView", start: (new Date()).getTime()});
+    (function (d, w, id) {
+        if (d.getElementById(id)) return;
+        var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+        ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+        var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+        if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+    })(document, window, "topmailru-code");
+</script><noscript><div>
+    <img src="//top-fwz1.mail.ru/counter?id=3050612;js=na" style="border:0;position:absolute;left:-9999px;" alt="" />
+</div></noscript>
+<!-- //Rating@Mail.ru counter -->
+
+
 <div id="content"></div>
 <div id="menu"><img class="controls params" src="img/params.png" alt="Settings"/></div>
 <div id="menuitems" style="display:none">
@@ -29,6 +46,7 @@ mail@x-noname.ru
         <li id="folder"><img class="controls folder" src="img/folder.png"/></li>
         <li id="imgstyle"><img class="controls expand" src="img/expand.png" alt="Crop"/></li>
         <li id="movie"><img class="controls" src="img/stat.png" alt="Vertical crop"/></li>
+        <li id="infod"><img class="controls" src="img/info.png" alt="Information"/></li>
     </ul>
 </div>
 
@@ -51,7 +69,7 @@ mail@x-noname.ru
         <p>Выбор папки</p>
         <small>Из-за ограничений REST API Яндекса будут отображаться только те файлы, которые находятся в корне папки.
             Или подготовьте специальную папку с фотографиями, или используйте папку автозагрузки фотографий с телефона
-            (Используется по умолчанию)
+            (Используется по умолчанию).
         </small>
         <br/>
         <select id="selectfolders">
@@ -62,6 +80,26 @@ mail@x-noname.ru
             <li><a href="#" class="but-yes">Да</a></li>
             <li><a href="#" class="but-close">Нет</a></li>
         </ul>
+        <a href="#" class="cd-popup-close img-replace"> </a>
+    </div> <!-- cd-popup-container -->
+</div>
+
+<div id="popup3" class="cd-popup" role="alert">
+    <div class="cd-popup-container">
+        <h3>Фоторамка для Яндекс.Диска с поддержкой Motion Photo</h3>
+        Подсказки:
+        <ul>
+            <li>Дважды тапните(кликните) по экрану, что бы перейти в полноэкранный режим</li>
+            <li>Для удаления фотки с диска нажмите первую конпку (Мусорный бак)</li>
+            <li>Для остановки смены фоток нажмите вторую кнопку (Пауза)</li>
+            <li>Для переключения на следующую фотку нажмите третью кнопку (Перемотка вперед)</li>
+            <li>Для смены папки, откуда показывать фотки, нажмите четвертую кнопку (Папка).
+                <small>Внимание, фотки загружаются только из корня папки. Поиск файлов в подпапках не осуществляется.</small></li>
+            <li>Подогнать фото под экран фотографии можно с помощью пятой кнопки (Распирающие стрелки)</li>
+            <li>Отключить Motion Photo и автозапуск видео можно шестой кнопкой - (Картина)</li>
+            <li>Дать автору на лимонад - можно <a href="https://yasobe.ru/na/na_limonad"> тут</a> </li>
+        </ul>
+        <br/>
         <a href="#" class="cd-popup-close img-replace"> </a>
     </div> <!-- cd-popup-container -->
 </div>

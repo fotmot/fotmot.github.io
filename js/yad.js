@@ -17,8 +17,12 @@ function setHeader(xhr) {
 function handleError(jqXHR, resp) {
     if (jqXHR.status === 403) {
         window.location = 'autorize.html'; // redirect page
-    } else {
-        console.error("Unknown error: " + resp);
+    } else if (jqXHR.status === 404) {
+        alert("Указанного ресурса не существует");
+        $("#folder").click();
+        return;
+    }else {
+        console.error("Unknown error: " , jqXHR);
     }
 }
 
