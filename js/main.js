@@ -186,7 +186,7 @@ var usedPos = [];
 
 function showRandom() {
     if (isPaused) return;
-    var pos = Math.floor(Math.random() * total + 1);
+    var pos = Math.floor(Math.random() * total );
     var attempt = 0;
     while (usedPos.indexOf(pos) >= 0 && attempt++ < 100) {
         pos = Math.floor(Math.random() * total + 1);
