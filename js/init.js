@@ -93,6 +93,9 @@ $(function () {
         $('#popup3').addClass('is-visible');
     });
 
+    $('#mail').on('click', function (event) {
+        this.href = "mai"+"lto"+":"+"fotmot"+"@x-nonam"+"e.ru?subject=Письмо с сайта fotmot.ru"; //против ботов
+    });
     $('#exit').on('click', function (event) {
 
         event.preventDefault();
