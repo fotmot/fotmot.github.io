@@ -66,7 +66,7 @@ ul {
     padding: 0;
 }
 
-#menuitems  li {
+#menuitems li {
     margin: 0;
     padding: 0;
     display: block;
@@ -118,13 +118,11 @@ input[type="button"] {
     }
 }
 
-@media  (max-height: 299px) {
+@media (max-height: 299px) {
     #menuitems li, #menu > img {
         width: 16px;
     }
 }
-
-
 
 .controls {
     filter: invert(50%);

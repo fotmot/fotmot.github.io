@@ -21,8 +21,8 @@ function handleError(jqXHR, resp) {
         alert("Указанного ресурса не существует");
         $("#folder").click();
         return;
-    }else {
-        console.error("Unknown error: " , jqXHR);
+    } else {
+        console.error("Unknown error: ", jqXHR);
     }
 }
 

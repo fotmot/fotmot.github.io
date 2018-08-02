@@ -25,14 +25,27 @@ mail@x-noname.ru
     _tmr.push({id: "3050612", type: "pageView", start: (new Date()).getTime()});
     (function (d, w, id) {
         if (d.getElementById(id)) return;
-        var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+        var ts = d.createElement("script");
+        ts.type = "text/javascript";
+        ts.async = true;
+        ts.id = id;
         ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
-        var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
-        if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+        var f = function () {
+            var s = d.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(ts, s);
+        };
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else {
+            f();
+        }
     })(document, window, "topmailru-code");
-</script><noscript><div>
-    <img src="//top-fwz1.mail.ru/counter?id=3050612;js=na" style="border:0;position:absolute;left:-9999px;" alt="" />
-</div></noscript>
+</script>
+<noscript>
+    <div>
+        <img src="//top-fwz1.mail.ru/counter?id=3050612;js=na" style="border:0;position:absolute;left:-9999px;" alt=""/>
+    </div>
+</noscript>
 <!-- //Rating@Mail.ru counter -->
 
 
@@ -94,10 +107,12 @@ mail@x-noname.ru
             <li>Для остановки смены фоток нажмите вторую кнопку (Пауза)</li>
             <li>Для переключения на следующую фотку нажмите третью кнопку (Перемотка вперед)</li>
             <li>Для смены папки, откуда показывать фотки, нажмите четвертую кнопку (Папка).
-                <small>Внимание, фотки загружаются только из корня папки. Поиск файлов в подпапках не осуществляется.</small></li>
+                <small>Внимание, фотки загружаются только из корня папки. Поиск файлов в подпапках не осуществляется.
+                </small>
+            </li>
             <li>Подогнать фото под экран фотографии можно с помощью пятой кнопки (Распирающие стрелки)</li>
             <li>Отключить Motion Photo и автозапуск видео можно шестой кнопкой - (Картина)</li>
-            <li>Дать автору на лимонад - можно <a href="https://yasobe.ru/na/na_limonad"> тут</a> </li>
+            <li>Дать автору на лимонад - можно <a href="https://yasobe.ru/na/na_limonad"> тут</a></li>
         </ul>
         <br/>
         <a href="#" class="cd-popup-close img-replace"> </a>

@@ -66,9 +66,9 @@ $(function () {
         var popup2 = $('#popup2');
         var popup3 = $('#popup3');
         if (event.which == '27') {
-            if(popup1.hasClass('is-visible')) popup1.removeClass('is-visible');
-            if(popup2.hasClass('is-visible')) popup2.removeClass('is-visible');
-            if(popup3.hasClass('is-visible')) popup3.removeClass('is-visible');
+            if (popup1.hasClass('is-visible')) popup1.removeClass('is-visible');
+            if (popup2.hasClass('is-visible')) popup2.removeClass('is-visible');
+            if (popup3.hasClass('is-visible')) popup3.removeClass('is-visible');
         }
     });
 
@@ -89,7 +89,7 @@ $(function () {
     $("#imgstyle").click(maximize);
     $("#movie").click(disableMove);
 
-    $("#infod").click(function() {
+    $("#infod").click(function () {
         console.log('aaa');
         $('#popup3').addClass('is-visible');
     });

@@ -197,16 +197,16 @@ function showRandom() {
     })
         .done(function (data) {
 
-            if(data._embedded.items.length===0){
+            if (data._embedded.items.length === 0) {
                 alert("В указанной папке нет файлов");
                 $("#folder").click();
                 return;
             }
 
-            if(isDebug)console.log(data._embedded.items);
+            if (isDebug) console.log(data._embedded.items);
 
             if (data._embedded.items[0] && (data._embedded.items[0].media_type === 'image'
-                    || data._embedded.items[0].media_type === 'video') ) {
+                    || data._embedded.items[0].media_type === 'video')) {
                 var name = data._embedded.items[0].name;
                 var file = data._embedded.items[0].file;
                 var path = data._embedded.items[0].path;
@@ -241,9 +241,9 @@ function showRandom() {
                 } else {
                     showRandom();
                 }
-            }else {
+            } else {
                 console.log('Посторонние файлы в каталоге');
-                trash[data._embedded.items[0].name]=1;
+                trash[data._embedded.items[0].name] = 1;
             }
         });
 }
@@ -252,7 +252,7 @@ function getFiles() {
     q('GET', '/disk/resources', {path: folder, fields: '_embedded.total'})
         .done(function (data) {
             total = data._embedded.total;
-            if(total===0 || total == trash.length){
+            if (total === 0 || total == trash.length) {
                 alert("В указанной папке нет файлов");
                 $("#folder").click();
                 return;
@@ -296,20 +296,20 @@ function updateContainer(content, newNode) {
 
 
 function showPhotoOrVideo(mediaObject, content) {
-    if(isDebug)console.log(mediaObject.media_type, mediaObject.size, isPlayMove);
+    if (isDebug) console.log(mediaObject.media_type, mediaObject.size, isPlayMove);
     if (mediaObject.media_type === "image" && mediaObject.size > 1.5 * 1024 * 1024 && isPlayMove) {
         var xhr = new XMLHttpRequest();
         xhr.timeout = 25000;
         xhr.open('GET', mediaObject.file, true);
         xhr.responseType = 'arraybuffer';
         xhr.ontimeout = function (e) {
-            if(isDebug)console.log("TimeOut reached");
+            if (isDebug) console.log("TimeOut reached");
         };
         xhr.onload = function (e) {
             if (this.status === 206 || this.status === 200) {
                 var byteArray = new Uint8Array(this.response);
                 var index = findIndex(byteArray);
-                if(isDebug)console.log('index=',index);
+                if (isDebug) console.log('index=', index);
                 if (index >= 0) {
                     var videoArray = byteArray.slice(index);
                     var blobVideo = new Blob([videoArray], {type: 'video/h264'});
@@ -401,18 +401,18 @@ function disableMove() {
 
 function checkAutorization(link) {
 
-    if(typeof link === "undefined"){
+    if (typeof link === "undefined") {
         return;
     }
     //$("#delprev").attr('src', link);
 
     var request = new XMLHttpRequest();
     request.open('GET', link, true);
-    request.onreadystatechange = function(){
+    request.onreadystatechange = function () {
         if (request.readyState === 4) {
             if (request.status === 403 || request.status === 0) {
                 window.location = 'autorize.html';
-            }else {
+            } else {
                 console.log(request.status);
             }
         }
