@@ -108,6 +108,8 @@ function setFolder(fld) {
             setSettings('folder', folder);
             trash = [];
         });
+    stop();
+    play();
 }
 
 function del() {
