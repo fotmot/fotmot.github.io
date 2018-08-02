@@ -263,6 +263,7 @@ function getFiles() {
         .fail(function () {
             alert("Неизвестная ошибка, выберете другую папку");
             $("#folder").click();
+            return;
         })
     ;
 }
