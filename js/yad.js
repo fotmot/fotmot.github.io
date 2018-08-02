@@ -2,16 +2,9 @@
  * Kazakov Ivan
  * mail@x-noname.ru
  */
-function get_cookie(cookie_name) {
-    var results = document.cookie.match('(^|;) ?' + cookie_name + '=([^;]*)(;|$)');
-    if (results)
-        return (unescape(results[2]));
-    else
-        return null;
-}
 
 function setHeader(xhr) {
-    xhr.setRequestHeader('Authorization', 'OAuth ' + get_cookie('yat'));
+    xhr.setRequestHeader('Authorization', 'OAuth ' + localStorage['yat']);
 }
 
 function handleError(jqXHR, resp) {

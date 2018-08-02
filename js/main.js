@@ -4,10 +4,11 @@
  */
 
 var isPaused = false;
-var isDebug = true;
+var isDebug = false;
 var folder;
 var total;
 var timerId;
+var trash = [];
 
 var imgExpand = "img/expand.png";
 var imgShrink = "img/shrink.png";
@@ -179,7 +180,6 @@ function setSettings(key, value) {
 
 var usedPos = [];
 
-var trash = [];
 
 function showRandom() {
     if (isPaused) return;
@@ -213,7 +213,8 @@ function showRandom() {
                 var size = data._embedded.items[0].size;
                 var date_time = data._embedded.items[0].exif.date_time;
                 var preview = data._embedded.items[0].preview;
-                checkAutorization(preview);
+                $("#delprev").attr('src', preview);
+
                 var media_type = data._embedded.items[0].media_type;
                 var content = $("#content");
 
@@ -260,7 +261,7 @@ function getFiles() {
             showRandom();
         })
         .fail(function () {
-            console.log("asdadasd");
+            alert("Неизвестная ошибка, выберете другую папку");
             $("#folder").click();
         })
     ;
@@ -398,28 +399,3 @@ function disableMove() {
         setSettings('motion', false);
     }
 }
-
-function checkAutorization(link) {
-
-    if (typeof link === "undefined") {
-        return;
-    }
-    //$("#delprev").attr('src', link);
-
-    var request = new XMLHttpRequest();
-    request.open('GET', link, true);
-    request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-            if (request.status === 403 || request.status === 0) {
-                window.location = 'autorize.html';
-            } else {
-                console.log(request.status);
-            }
-        }
-    };
-    request.send();
-
-
-}
-
-

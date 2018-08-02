@@ -1,10 +1,10 @@
 loadSettings();
 //0x0112 : "Orientation",
-var token = get_cookie("yat");
+var token = localStorage["yat"];
 $(function () {
     // Handler for .ready() called.
     $("#content").dblclick(performClick);
-    if (token === null) {
+    if (token === null || typeof token === 'undefined') {
         document.location = 'autorize.html';
     } else {
         go();
@@ -90,8 +90,15 @@ $(function () {
     $("#movie").click(disableMove);
 
     $("#infod").click(function () {
-        console.log('aaa');
         $('#popup3').addClass('is-visible');
+    });
+
+    $('#exit').on('click', function (event) {
+
+        event.preventDefault();
+        localStorage.clear();
+        window.location = 'exit.html';
+
     });
 
 });
