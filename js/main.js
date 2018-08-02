@@ -328,9 +328,23 @@ function showPhotoOrVideo(mediaObject, content) {
                     video[0].defaultPlaybackRate = 0.4;
                     video[0].playbackRate = 0.4;
 
+                    video[0].addEventListener('error', function(evt){
+                        //показываем хотя бы картинку
+                        var img = $("<div/>", {
+                            class: 'img',
+                            title: mediaObject.name,
+                            style: 'background-size:' + imgstyle + ';background-image:url(' + mediaObject.file + ')'
+                        });
+                        if (mediaObject.date_time) {
+                            $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(img);
+                        }
+                        updateContainer(content, img);
+                    }, false);
+
                     video[0].addEventListener('progress', function(evt){
                         video[0].play();
                     }, false);
+
 
                 } else {
                     var img = $("<div/>", {
