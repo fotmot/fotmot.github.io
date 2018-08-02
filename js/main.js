@@ -248,6 +248,10 @@ function showRandom() {
             } else {
                 console.log('Посторонние файлы в каталоге');
                 trash[data._embedded.items[0].name] = 1;
+                if (!isPaused) {
+                    clearTimeout(timerId);
+                    timerId = setTimeout(showRandom, 1000);
+                }
             }
         });
 }
