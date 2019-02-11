@@ -36,16 +36,11 @@ function performClick() {
 }
 
 document.onkeyup = function (ev) {
-    document.location.hash = '#' + ev.keyCode + ':' + ev.which;
-    if (ev.which == 13 || ev.keyCode == 13 || ev.which == 108 || ev.keyCode == 108) {
+    if (ev.which == 13 || ev.keyCode == 13 || ev.which == 457 || ev.keyCode == 457) {
         //code to execute here
         performClick();
         return false;
     }
-}
-
-document.onmousedown = function (ev) {
-    document.location.hash = '#'  + ev.which;
 }
 
 function maximize() {
