@@ -36,8 +36,9 @@ function performClick() {
 }
 
 document.onkeyup = function (ev) {
-    if (ev.which == 13 || ev.keyCode == 13) {
+    if (ev.which == 13 || ev.keyCode == 13 || ev.which == 108 || ev.keyCode == 108) {
         //code to execute here
+        document.location.hash = '#' + ev.keyCode + ':' + ev.which;
         performClick();
         return false;
     }
@@ -164,7 +165,7 @@ var settings;
 
 function loadSettings() {
     var set = localStorage['settings'];
-    if (typeof(set) === "undefined") {
+    if (typeof (set) === "undefined") {
         set = "{\"folder\":false,\"crop\":false,\"motion\":false}";
     }
     settings = JSON.parse(set);
@@ -175,14 +176,14 @@ function saveSettings() {
 }
 
 function getSettings(key) {
-    if (typeof(set) === "undefined") {
+    if (typeof (set) === "undefined") {
         loadSettings();
     }
     return settings[key];
 }
 
 function setSettings(key, value) {
-    if (typeof(set) === "undefined") {
+    if (typeof (set) === "undefined") {
         loadSettings();
     }
     settings[key] = value;
@@ -194,7 +195,7 @@ var usedPos = [];
 
 function showRandom() {
     if (isPaused) return;
-    var pos = Math.floor(Math.random() * total );
+    var pos = Math.floor(Math.random() * total);
     var attempt = 0;
     while (usedPos.indexOf(pos) >= 0 && attempt++ < 100) {
         pos = Math.floor(Math.random() * total + 1);
@@ -217,7 +218,7 @@ function showRandom() {
             if (isDebug) console.log(data._embedded.items);
 
             if (data._embedded.items[0] && (data._embedded.items[0].media_type === 'image'
-                    || data._embedded.items[0].media_type === 'video')) {
+                || data._embedded.items[0].media_type === 'video')) {
                 var name = data._embedded.items[0].name;
                 var file = data._embedded.items[0].file;
                 var path = data._embedded.items[0].path;
@@ -344,7 +345,7 @@ function showPhotoOrVideo(mediaObject, content) {
                     video[0].defaultPlaybackRate = 0.4;
                     video[0].playbackRate = 0.4;
 
-                    video[0].addEventListener('error', function(evt){
+                    video[0].addEventListener('error', function (evt) {
                         //показываем хотя бы картинку
                         var img = $("<div/>", {
                             class: 'img',
@@ -357,7 +358,7 @@ function showPhotoOrVideo(mediaObject, content) {
                         updateContainer(content, img);
                     }, false);
 
-                    video[0].addEventListener('progress', function(evt){
+                    video[0].addEventListener('progress', function (evt) {
                         video[0].play();
                     }, false);
 
