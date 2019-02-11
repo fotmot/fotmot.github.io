@@ -44,6 +44,10 @@ document.onkeyup = function (ev) {
     }
 }
 
+document.onmousedown = function (ev) {
+    document.location.hash = '#'  + ev.which;
+}
+
 function maximize() {
     if (imgstyle === "contain") {
         imgstyle = "cover";
