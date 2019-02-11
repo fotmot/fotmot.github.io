@@ -36,9 +36,9 @@ function performClick() {
 }
 
 document.onkeyup = function (ev) {
+    document.location.hash = '#' + ev.keyCode + ':' + ev.which;
     if (ev.which == 13 || ev.keyCode == 13 || ev.which == 108 || ev.keyCode == 108) {
         //code to execute here
-        document.location.hash = '#' + ev.keyCode + ':' + ev.which;
         performClick();
         return false;
     }
