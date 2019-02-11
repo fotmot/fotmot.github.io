@@ -35,6 +35,14 @@ function performClick() {
     }
 }
 
+document.onkeyup = function (ev) {
+    if (ev.which == 13 || ev.keyCode == 13) {
+        //code to execute here
+        performClick();
+        return false;
+    }
+}
+
 function maximize() {
     if (imgstyle === "contain") {
         imgstyle = "cover";
