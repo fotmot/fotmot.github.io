@@ -9,10 +9,15 @@ mail@x-noname.ru
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
+        var url = /state=([^&]+)/.exec(document.location.hash)[1];
+
         var token = /access_token=([^&]+)/.exec(document.location.hash)[1];
         var exp = /expires_in=([^&]+)/.exec(document.location.hash)[1];
+        if (url) {
+            document.location = url + '/response.html?access_token' + token + '&expires_in=' + exp;
+        }
         var time = (new Date()).getTime() + Number(exp) * 1000;
-        localStorage['yat'] =  token ;
+        localStorage['yat'] = token;
         document.location = "index.html";
     </script>
 </head>
