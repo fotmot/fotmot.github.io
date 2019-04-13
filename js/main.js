@@ -53,7 +53,7 @@ function performClick() {
 //pre-ch=10190
 
 document.onkeyup = function (ev) {
-    var key= ev.which  || ev.keyCode;
+    var key = ev.which || ev.keyCode;
     switch (key) {
         case 10200: {
             performClick();
@@ -77,11 +77,11 @@ document.onkeyup = function (ev) {
             play();
             return false;
         }
-        case 49:{
+        case 49: {
             maximize();
             return false;
         }
-        case 50:{
+        case 50: {
             disableMove();
             return false;
         }
@@ -283,7 +283,7 @@ function showRandom() {
                     date_time = d.toLocaleDateString();
                 }
                 if (media_type === "video" || media_type === "image") {
-                    showPhotoOrVideo({
+                    var needStop = showPhotoOrVideo({
                         name: name,
                         path: path,
                         file: file,
@@ -292,7 +292,7 @@ function showRandom() {
                         preview: preview,
                         date_time: date_time
                     }, content);
-                    if (!isPaused) {
+                    if (!isPaused && !needStop) {
                         timerId = setTimeout(showRandom, 30000);
                     }
                 } else {
@@ -438,13 +438,19 @@ function showPhotoOrVideo(mediaObject, content) {
             src: mediaObject.file,
             title: mediaObject.name,
             autoplay: isPlayMove ? "autoplay" : false,
-            controls: isPlayMove ? false : "controls"
+            // controls: isPlayMove ? false : "controls",
+            'onended': function () {
+                stop();
+                play();
+            }
         });
         if (mediaObject.date_time) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
         }
         updateContainer(content, vid);
+        return true;
     }
+    return false;
 }
 
 function findIndex(arr) {
