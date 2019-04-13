@@ -440,8 +440,7 @@ function showPhotoOrVideo(mediaObject, content) {
             autoplay: isPlayMove ? "autoplay" : false,
             // controls: isPlayMove ? false : "controls",
             'onended': function () {
-                stop();
-                play();
+                    showRandom();
             }
         });
         if (mediaObject.date_time) {
