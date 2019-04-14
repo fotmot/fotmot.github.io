@@ -439,7 +439,7 @@ function showPhotoOrVideo(mediaObject, content) {
             title: mediaObject.name,
             autoplay: isPlayMove ? "autoplay" : false,
             controls: "controls",
-            'onended': function () {
+            "ended": function () {
                 stop();
                 play();
             }
