@@ -35,56 +35,11 @@ function performClick() {
     }
 }
 
-//Samsung TV RC buttons
-//red=403
-//green=404
-//yellow=405
-//blue=406
-//info=457
-
-//stop=413
-//ff=417
-//pause=19
-//play=415
-//rewind=412
-
-//b0-9=48-57
-//ttx=10200
-//pre-ch=10190
-
 document.onkeyup = function (ev) {
-    var key = ev.which || ev.keyCode;
-    switch (key) {
-        case 10200: {
-            performClick();
-            return false;
-        }
-        case 417: {
-            stop();
-            play();
-            return false;
-        }
-        case 403: {
-            $("#delete").click();
-            return false;
-        }
-        case 19: {
-            stop();
-            return false;
-        }
-        case 415: {
-            stop();
-            play();
-            return false;
-        }
-        case 49: {
-            maximize();
-            return false;
-        }
-        case 50: {
-            disableMove();
-            return false;
-        }
+    if (ev.which == 13 || ev.keyCode == 13 || ev.which == 457 || ev.keyCode == 457) {
+        //code to execute here
+        performClick();
+        return false;
     }
 }
 
@@ -283,7 +238,7 @@ function showRandom() {
                     date_time = d.toLocaleDateString();
                 }
                 if (media_type === "video" || media_type === "image") {
-                    var needStop = showPhotoOrVideo({
+                    showPhotoOrVideo({
                         name: name,
                         path: path,
                         file: file,
@@ -292,7 +247,7 @@ function showRandom() {
                         preview: preview,
                         date_time: date_time
                     }, content);
-                    if (!isPaused && !needStop) {
+                    if (!isPaused) {
                         timerId = setTimeout(showRandom, 30000);
                     }
                 } else {
@@ -437,16 +392,14 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: "autoplay",
-            controls: false
+            autoplay: isPlayMove ? "autoplay" : false,
+            controls: isPlayMove ? false : "controls"
         });
         if (mediaObject.date_time) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
         }
         updateContainer(content, vid);
-        return true;
     }
-    return false;
 }
 
 function findIndex(arr) {
