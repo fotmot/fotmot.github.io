@@ -434,11 +434,12 @@ function showPhotoOrVideo(mediaObject, content) {
         }
         updateContainer(content, img);
     } else {
+        //isPlayMove ? false :
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
             autoplay: isPlayMove ? "autoplay" : false,
-            // controls: isPlayMove ? false : "controls",
+            controls: "controls",
             'onended': function () {
                     showRandom();
             }
