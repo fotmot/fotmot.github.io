@@ -142,7 +142,6 @@ function playPause() {
 }
 
 function play() {
-    console.log('PLAY', timerId);
     clearTimeout(timerId);
     $(".stop").attr("src", imgPause);
     isPaused = false;
@@ -150,7 +149,6 @@ function play() {
 }
 
 function stop() {
-    console.log('STOP', timerId);
     isPaused = true;
     clearTimeout(timerId);
     $(".stop").attr("src", imgPlay);
@@ -238,7 +236,7 @@ function showRandom() {
                     date_time = d.toLocaleDateString();
                 }
                 if (media_type === "video" || media_type === "image") {
-                    showPhotoOrVideo({
+                    let needStop = showPhotoOrVideo({
                         name: name,
                         path: path,
                         file: file,
@@ -247,7 +245,7 @@ function showRandom() {
                         preview: preview,
                         date_time: date_time
                     }, content);
-                    if (!isPaused) {
+                    if (!isPaused && !needStop) {
                         timerId = setTimeout(showRandom, 30000);
                     }
                 } else {
@@ -389,16 +387,23 @@ function showPhotoOrVideo(mediaObject, content) {
         }
         updateContainer(content, img);
     } else {
+        clearTimeout(timerId);
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: isPlayMove ? "autoplay" : false,
-            controls: isPlayMove ? false : "controls"
+            autoplay: "autoplay",
+            controls: "controls",
+            ended: function () {
+                if (!isPaused) {
+                    showRandom();
+                }
+            }
         });
         if (mediaObject.date_time) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
         }
         updateContainer(content, vid);
+        return true;
     }
 }
 
