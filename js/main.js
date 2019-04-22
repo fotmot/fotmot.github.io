@@ -387,8 +387,13 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: videoAutoRun ? "autoplay" : false,
+            //autoplay: videoAutoRun ? "autoplay" : false,
             controls: "controls",
+            progress: function () {
+                if (!isPaused) {
+                    this.play();
+                }
+            },
             ended: function () {
                 if (!isPaused) {
                     showRandom();
