@@ -36,7 +36,6 @@ document.onkeyup = function (ev) {
 }
 
 
-
 function hideMenu() {
     $("#menu").hide();
 }
@@ -400,7 +399,7 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: videoAutoRun ? "autoplay" : false,
+            autoplay: videoAutoRun ? true : false,
             controls: "controls",
             ended: function () {
                 if (!isPaused) {
