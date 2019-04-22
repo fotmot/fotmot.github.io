@@ -403,7 +403,7 @@ function showPhotoOrVideo(mediaObject, content) {
             controls: "controls",
             ended: function () {
                 if (!isPaused) {
-                    showRandom();
+                    //showRandom();
                 }
             }
         });
