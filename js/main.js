@@ -400,13 +400,17 @@ function showPhotoOrVideo(mediaObject, content) {
             src: mediaObject.file,
             title: mediaObject.name,
             autoplay: videoAutoRun ? true : false,
-            //controls: "controls",
-            loadeddata: function(){
-              this.play();
+            play: function(){
+                $(this).data('played','true');
             },
             ended: function () {
                 if (!isPaused) {
-                    //showRandom();
+                    if($(this).data('played')=='true'){
+                        showRandom();
+                    }else {
+                        $(this).attr('controls','controls');
+                        this.play();
+                    }
                 }
             }
         });
