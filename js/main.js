@@ -9,7 +9,7 @@ var folder;
 var total;
 var timerId;
 var trash = [];
-let videoAutoRun = false;
+let videoAutoRun = true;
 
 var imgExpand = "img/expand.png";
 var imgShrink = "img/shrink.png";
