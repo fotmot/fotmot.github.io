@@ -196,10 +196,10 @@ function showRandom() {
     if (isPaused) return;
 
     let videos =  $('video');
-    if(videos.length>0){
-        if(!videos.ended) {
-            return;
-        }
+    if(videos!= undefined && videos.length>0){
+        // if(!videos.ended) {
+        //     return;
+        // }
     }
     var pos = Math.floor(Math.random() * total);
     var attempt = 0;
