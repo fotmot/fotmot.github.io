@@ -44,18 +44,7 @@ document.onkeyup = function (ev) {
     }
 }
 
-function maximize() {
-    if (imgstyle === "contain") {
-        imgstyle = "cover";
-        $(".expand").attr('src', imgShrink);
-        setSettings('crop', true);
-    } else {
-        imgstyle = "contain";
-        $(".expand").attr('src', imgExpand);
-        setSettings('crop', false);
-    }
-    $("div.img").css("background-size", imgstyle);
-}
+
 
 function hideMenu() {
     $("#menu").hide();
