@@ -9,6 +9,7 @@ var folder;
 var total;
 var timerId;
 var trash = [];
+let videoAutoRun = false;
 
 
 var imgExpand = "img/expand.png";

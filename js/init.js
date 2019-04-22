@@ -1,3 +1,4 @@
+videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
 loadSettings();
 //0x0112 : "Orientation",
 var token = localStorage["yat"];
@@ -5,7 +6,7 @@ $(function () {
     // Handler for .ready() called.
 
 
-    let videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
+
     $("#content").dblclick(performClick);
     performClick();
 
