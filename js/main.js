@@ -131,7 +131,7 @@ function del() {
         .done(play);
 }
 
-function confirm() {
+function confirm2() {
     stop();
     //$('#confirm>img').attr('src',$('#content').data('preview'));
     $('#confirm').show();
