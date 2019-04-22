@@ -197,7 +197,7 @@ function showRandom() {
 
     let videos =  $('video');
     if(videos.length>0){
-        if(!videos.ended()) {
+        if(!videos.ended) {
             return;
         }
     }
