@@ -7,7 +7,6 @@ $(function () {
     videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
 
     $("#content").dblclick(performClick);
-    performClick();
 
     if (token === null || typeof token === 'undefined') {
         document.location = 'autorize.html';

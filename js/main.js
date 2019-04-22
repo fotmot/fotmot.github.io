@@ -405,7 +405,7 @@ function showPhotoOrVideo(mediaObject, content) {
             controls: "controls",
             progress: function () {
                 if (!isPaused) {
-                    vid.play();
+                    $(this)[0].play();
                 }
             },
             ended: function () {
