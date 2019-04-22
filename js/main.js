@@ -11,9 +11,6 @@ var timerId;
 var trash = [];
 let videoAutoRun = false;
 
-let fordebug = null;
-
-
 var imgExpand = "img/expand.png";
 var imgShrink = "img/shrink.png";
 var imgWait = "img/wait.png";
@@ -407,14 +404,12 @@ function showPhotoOrVideo(mediaObject, content) {
             controls: "controls",
             progress: function () {
                 if (!isPaused) {
-                    fordebug = this;
-                    console.log(this);
+                    this.play();
                 }
             },
             ended: function () {
                 if (!isPaused) {
-                    console.log(this);
-                    //showRandom();
+                    showRandom();
                 }
             }
         });
