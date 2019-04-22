@@ -115,6 +115,15 @@ function setFolder(fld) {
 
 }
 
+function performClick() {
+    console.log('double click');
+    if (!document.webkitIsFullScreen) {
+        window.document.body.webkitRequestFullscreen();
+    } else {
+        window.document.webkitCancelFullScreen();
+    }
+}
+
 function del() {
     var currentPath = $('#content').data('path');
     q('DELETE', '/disk/resources', {path: currentPath})
@@ -395,7 +404,7 @@ function showPhotoOrVideo(mediaObject, content) {
             controls: "controls",
             progress: function () {
                 if (!isPaused) {
-                    $(this)[0].play();
+                    vid.play();
                 }
             },
             ended: function () {
