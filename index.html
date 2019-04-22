@@ -13,6 +13,10 @@ mail@x-noname.ru
     <link rel="apple-touch-icon image_src" href="img/stat.png">
     <link crossorigin="anonymous" media="all" rel="stylesheet" href="css/confirm.css">
 
+    <script type="text/javascript">
+        let videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
+    </script>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/yad.js" type="text/javascript"></script>
     <script src="js/main.js" type="text/javascript"></script>
@@ -20,35 +24,6 @@ mail@x-noname.ru
 
 </head>
 <body>
-<!-- Rating@Mail.ru counter -->
-<script type="text/javascript">
-    var _tmr = window._tmr || (window._tmr = []);
-    _tmr.push({id: "3050612", type: "pageView", start: (new Date()).getTime()});
-    (function (d, w, id) {
-        if (d.getElementById(id)) return;
-        var ts = d.createElement("script");
-        ts.type = "text/javascript";
-        ts.async = true;
-        ts.id = id;
-        ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
-        var f = function () {
-            var s = d.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(ts, s);
-        };
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else {
-            f();
-        }
-    })(document, window, "topmailru-code");
-</script>
-<noscript>
-    <div>
-        <img src="//top-fwz1.mail.ru/counter?id=3050612;js=na" style="border:0;position:absolute;left:-9999px;" alt=""/>
-    </div>
-</noscript>
-<!-- //Rating@Mail.ru counter -->
-
 
 <div id="content"></div>
 <div id="menu"><img class="controls params" src="img/params.png" alt="Settings"/></div>

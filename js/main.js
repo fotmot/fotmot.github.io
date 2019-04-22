@@ -10,6 +10,7 @@ var total;
 var timerId;
 var trash = [];
 
+
 var imgExpand = "img/expand.png";
 var imgShrink = "img/shrink.png";
 var imgWait = "img/wait.png";
@@ -334,7 +335,11 @@ function showPhotoOrVideo(mediaObject, content) {
                     });
                     video[0].src = window.URL.createObjectURL(blobVideo);
                     if (mediaObject.date_time) {
-                        $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(video);
+                        $("<div/>", {
+                            class: 'date',
+                            text: mediaObject.date_time,
+                            controls: videoAutoRun ? false : 'controls'
+                        }).appendTo(video);
 
                     }
                     updateContainer(content, video);
@@ -356,7 +361,9 @@ function showPhotoOrVideo(mediaObject, content) {
                     }, false);
 
                     video[0].addEventListener('progress', function (evt) {
-                        video[0].play();
+                        if (videoAutoRun) {
+                            video[0].play();
+                        }
                     }, false);
 
 
@@ -391,7 +398,7 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: "autoplay",
+            autoplay: videoAutoRun ? "autoplay" : false,
             controls: "controls",
             ended: function () {
                 if (!isPaused) {
@@ -403,7 +410,7 @@ function showPhotoOrVideo(mediaObject, content) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
         }
         updateContainer(content, vid);
-        return true;
+        return videoAutoRun;
     }
 }
 
