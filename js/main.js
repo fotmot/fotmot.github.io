@@ -194,6 +194,13 @@ var usedPos = [];
 
 function showRandom() {
     if (isPaused) return;
+
+    let videos =  $('video');
+    if(videos.length>0){
+        if(!videos.ended()) {
+            return;
+        }
+    }
     var pos = Math.floor(Math.random() * total);
     var attempt = 0;
     while (usedPos.indexOf(pos) >= 0 && attempt++ < 100) {
@@ -238,7 +245,7 @@ function showRandom() {
                     date_time = d.toLocaleDateString();
                 }
                 if (media_type === "video" || media_type === "image") {
-                    let needStop = showPhotoOrVideo({
+                    showPhotoOrVideo({
                         name: name,
                         path: path,
                         file: file,
@@ -247,7 +254,7 @@ function showRandom() {
                         preview: preview,
                         date_time: date_time
                     }, content);
-                    if (!isPaused && !needStop) {
+                    if (!isPaused) {
                         timerId = setTimeout(showRandom, 30000);
                     }
                 } else {
@@ -399,26 +406,12 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: videoAutoRun ? true : false,
-            play: function(){
-                $(this).data('played','true');
-            },
-            ended: function () {
-                if (!isPaused) {
-                    if($(this).data('played')=='true'){
-                        showRandom();
-                    }else {
-                        $(this).attr('controls','controls');
-                        this.play();
-                    }
-                }
-            }
+            autoplay: 'autoplay'
         });
         if (mediaObject.date_time) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
         }
         updateContainer(content, vid);
-        return videoAutoRun;
     }
 }
 
