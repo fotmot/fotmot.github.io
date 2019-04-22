@@ -406,7 +406,11 @@ function showPhotoOrVideo(mediaObject, content) {
         var vid = $("<video/>", {
             src: mediaObject.file,
             title: mediaObject.name,
-            autoplay: 'autoplay'
+            autoplay: 'autoplay',
+            muted: 'muted',
+            click: function () {
+                this.muted = false;
+            }
         });
         if (mediaObject.date_time) {
             $("<div/>", {class: 'date', text: mediaObject.date_time}).appendTo(vid);
