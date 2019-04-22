@@ -400,7 +400,7 @@ function showPhotoOrVideo(mediaObject, content) {
             src: mediaObject.file,
             title: mediaObject.name,
             autoplay: videoAutoRun ? true : false,
-            controls: "controls",
+            //controls: "controls",
             loadeddata: function(){
               this.play();
             },
