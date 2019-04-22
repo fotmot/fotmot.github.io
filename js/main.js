@@ -27,15 +27,6 @@ var imgstyle = 'contain';
 
 var isPlayMove = true;
 
-function performClick() {
-    console.log('double click');
-    if (!document.webkitIsFullScreen) {
-        window.document.body.webkitRequestFullscreen();
-    } else {
-        window.document.webkitCancelFullScreen();
-    }
-}
-
 document.onkeyup = function (ev) {
     if (ev.which == 13 || ev.keyCode == 13 || ev.which == 457 || ev.keyCode == 457) {
         //code to execute here
@@ -88,6 +79,19 @@ function changeFolder() {
             });
         });
 
+}
+
+function maximize() {
+    if (imgstyle === "contain") {
+        imgstyle = "cover";
+        $(".expand").attr('src', imgShrink);
+        setSettings('crop', true);
+    } else {
+        imgstyle = "contain";
+        $(".expand").attr('src', imgExpand);
+        setSettings('crop', false);
+    }
+    $("div.img").css("background-size", imgstyle);
 }
 
 function setFolder(fld) {
@@ -391,7 +395,7 @@ function showPhotoOrVideo(mediaObject, content) {
             controls: "controls",
             progress: function () {
                 if (!isPaused) {
-                    this.play();
+                    $(this)[0].play();
                 }
             },
             ended: function () {

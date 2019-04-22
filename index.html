@@ -14,21 +14,18 @@ mail@x-noname.ru
     <link crossorigin="anonymous" media="all" rel="stylesheet" href="css/confirm.css">
 
     <script type="text/javascript">
-        function maximize() {
-            if (imgstyle === "contain") {
-                imgstyle = "cover";
-                $(".expand").attr('src', imgShrink);
-                setSettings('crop', true);
+
+        function performClick() {
+            console.log('double click');
+            if (!document.webkitIsFullScreen) {
+                window.document.body.webkitRequestFullscreen();
             } else {
-                imgstyle = "contain";
-                $(".expand").attr('src', imgExpand);
-                setSettings('crop', false);
+                window.document.webkitCancelFullScreen();
             }
-            $("div.img").css("background-size", imgstyle);
         }
 
         let videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
-        maximize();
+        performClick();
     </script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
