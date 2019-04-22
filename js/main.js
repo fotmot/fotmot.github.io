@@ -401,6 +401,9 @@ function showPhotoOrVideo(mediaObject, content) {
             title: mediaObject.name,
             autoplay: videoAutoRun ? true : false,
             controls: "controls",
+            loadeddata: function(){
+              this.play();
+            },
             ended: function () {
                 if (!isPaused) {
                     //showRandom();
