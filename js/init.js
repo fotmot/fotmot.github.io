@@ -3,9 +3,10 @@ loadSettings();
 var token = localStorage["yat"];
 $(function () {
     // Handler for .ready() called.
-    $("#content").dblclick(performClick);
-    
+
+
     let videoAutoRun = confirm("Вы не против автовоспроизведения видео?");
+    $("#content").dblclick(performClick);
     performClick();
 
     if (token === null || typeof token === 'undefined') {
