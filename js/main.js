@@ -18,9 +18,19 @@ $(function () {
         video[0].load();
     }
 
+    checkResources();
+
     //for starting
-    video.on('ended',function(){
+    video.on('ended', function () {
         video.off('ended');
+        startLoop();
+    });
+
+    function checkResources() {
+        checkYandex();
+    }
+
+    function startLoop() {
         playVideo('//www.videvo.net/videvo_files/converted/2017_12/videos/171124_A1_HD_008.mp484461_jw.mp4');
         setTimeout(function () {
             showImage('https://cdn.dribbble.com/users/66221/screenshots/1655593/html5.png');
@@ -29,6 +39,6 @@ $(function () {
 
             }, 10000);
         }, 10000);
-    });
+    }
 
 });
