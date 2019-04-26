@@ -8,8 +8,11 @@
     <script>
         let used = [];
 
-        function random(min, max) {
+        function random(min, max, is_unique_only = true) {
             let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
+            if(!is_unique_only){
+                return rnd;
+            }
             if (used.includes(rnd) && max > 500) {
                 rnd = random(min, max);
             } else if (max > 500) {
@@ -23,7 +26,9 @@
     <script src="js/jquery-3.4.0.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="/js/yandex.js"></script>
+    <script src="js/pixels.com.js"></script>
     <script src="/js/main.js"></script>
+
 
 </head>
 <body>
@@ -31,6 +36,8 @@
     <video autoplay id="video" preload="auto" controls>
         <source src="/media/output.mp4">
     </video>
+    <div id="overlay"></div>
 </div>
+
 </body>
 </html>

@@ -30,6 +30,13 @@ header {
 }
 
 #container div {
+    display: inline-block;
     position: relative;
+    left: 48%;
+    border-radius: 5px;
     z-index: 1;
+    padding: 5px;
+    background-color: #e1f9f1;
+    text-align: center;
+    opacity: 0.6;
 }

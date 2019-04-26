@@ -1,10 +1,14 @@
 const METHOD_YANDEX = 1;
+const METHOD_INTERNET = 2;
 let video;
+let overlay;
 let container;
+let startLoop;
 
-function playVideo(src, time) {
+function playVideo(src, html = '') {
     if (video == undefined || src == undefined || src.trim() == '') return;
     clearTimeout(timer);
+    overlay.html(html);
     video.off('ended');
     video.on('ended', function () {
         video.off('ended');
@@ -16,8 +20,9 @@ function playVideo(src, time) {
     video[0].load();
 }
 
-function showImage(src, time) {
+function showImage(src, html = '') {
     if (video == undefined) return;
+    overlay.html(html);
     video.off('ended');
     video[0].pause();
     video.attr('controls', false);
@@ -29,29 +34,30 @@ function showImage(src, time) {
 
 $(function () {
     video = $("#video");
+    overlay = $("#overlay");
     container = $("#container");
-    checkResources();
     //for starting
     video.on('ended', function () {
         video.off('ended');
         startLoop();
     });
 
-    function checkResources() {
-        checkYandex();
-    }
 
     let isPaused = false;
     let interval = 30000;
-    let current_method = METHOD_YANDEX;
+    let current_method = METHOD_INTERNET;
 
-    function startLoop() {
+    startLoop = function () {
         clearTimeout(timer);
         if (!isPaused) {
             switch (current_method) {
                 case METHOD_YANDEX: {
+                    checkYandex();
                     showYandex();
-
+                    break;
+                }
+                case METHOD_INTERNET: {
+                    showPixel();
                     break;
                 }
             }
