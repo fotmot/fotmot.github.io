@@ -36,7 +36,14 @@
     <video autoplay id="video" preload="auto" controls>
         <source src="/media/output.mp4">
     </video>
-    <div id="overlay"></div>
+    <div id="overlay"><span id="sbut" onclick="toggleSettings()">&#9776;</span><span id="meta"></span></div>
+    <div id="settings">
+        <label for="sel_method">Выбрать источник</label>
+        <select id="sel_method" onchange="changeMethod(this.value);">
+            <option value="1">Pixels.com</option>
+            <option value="2">Yandex.Disk</option>
+        </select>
+    </div>
 </div>
 
 </body>
