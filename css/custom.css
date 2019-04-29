@@ -36,8 +36,8 @@ header {
 
 #overlay {
     display: inline-block;
-    left: 48%;
-    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     padding: 5px;
     background-color: #e1f9f1;
     text-align: center;
@@ -47,16 +47,17 @@ header {
 #settings {
     background-color: beige;
     width: 80%;
-    height: 80%;
+    height: 65%;
     min-height: 480px;
     left: -100%;
-    top:5%;
+    top: 5%;
     display: none;
     opacity: 0.8;
     font-size: xx-large;
     padding: 5%;
 }
-#settings>select{
+
+#settings > select {
     font-size: xx-large;
 }
 

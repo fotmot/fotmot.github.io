@@ -10,7 +10,7 @@
 
         function random(min, max, is_unique_only = true) {
             let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
-            if(!is_unique_only){
+            if (!is_unique_only) {
                 return rnd;
             }
             if (used.includes(rnd) && max > 500) {
@@ -33,7 +33,7 @@
 </head>
 <body>
 <div id="container">
-    <video autoplay id="video" preload="auto" controls>
+    <video autoplay controls id="video" preload="auto">
         <source src="/media/output.mp4">
     </video>
     <div id="overlay"><span id="sbut" onclick="toggleSettings()">&#9776;</span><span id="meta"></span></div>
