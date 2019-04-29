@@ -90,6 +90,7 @@ function changeMethod(method) {
         localStorage.method = method;
     }
     current_method = method;
+    mainSource = Source.getSource(current_method);
     startLoop();
 }
 

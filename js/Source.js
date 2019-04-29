@@ -19,11 +19,13 @@ class Source{
     }
 
     settingsSetValue(key,value){
+        console.log(`save ${key} ${value}`);
         this.settings.key = value;
         localStorage[this.settings_key]= JSON.stringify(this.settings);
     }
 
     settingsGetValue(key){
+        console.log(`save ${key}`);
         return this.settings[key];
     }
 

@@ -18,8 +18,8 @@ class YandexSourceImpl extends Source {
 
     show() {
         let self = this;
-        if (this.settingsGetValue('method') == this.YAD_METHOD_RANDOM) {
-            if (this.settingsGetValue('folder') == this.YAD_AUTOLOAD_FOLDER) { //узнаем настоящее имя папки
+        if (this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_RANDOM) {
+            if (this.settingsGetValue('folder') == YandexSourceImpl.YAD_AUTOLOAD_FOLDER) { //узнаем настоящее имя папки
                 this.getDisk('system_folders.photostream', function (response) {
                     console.log('Folder is:', response.system_folders.photostream);
                     self.settingsSetValue('folder',response.system_folders.photostream);
@@ -42,6 +42,7 @@ class YandexSourceImpl extends Source {
     loadFolder(folder) {
         if(folder==undefined){
             folder = this.settingsGetValue('folder');
+            console.log(folder);
         }
         let totalSettings = this.settingsGetValue('total');
         if (totalSettings[folder] == undefined) {
@@ -58,7 +59,7 @@ class YandexSourceImpl extends Source {
                     self.settingsSaveValue('total',totalSettings);
                     self.loadResource(folder);
                 }
-            }, function () {
+            }, function (jqXHR,resp) {
                 if (jqXHR.status == 401 || jqXHR.status == 401) {
                     self.autorize();
                 } else {
@@ -120,7 +121,7 @@ class YandexSourceImpl extends Source {
         } else {
             let self = this;
             this.getDisk({fields: 'user'}, function () {
-                console.log('Autorization is fine');
+                console.log('Authorization is OK');
                 return;
             }, function (jqXHR, resp) {
                 if (jqXHR.status == 401 || jqXHR.status == 401) {
@@ -137,14 +138,15 @@ class YandexSourceImpl extends Source {
     }
 
     getDisk(params, success, fail) {
-        this.q('GET', URL + '/disk', params, fail).done(success);
+        this.q('GET', YandexSourceImpl.URL + '/disk', params, fail).done(success);
     }
 
     getResources(params, success, fail) {
-        q('GET', URL + '/disk/resources', params, fail).done(success);
+        this.q('GET', YandexSourceImpl.URL + '/disk/resources', params, fail).done(success);
     }
 
     q(type, url, params, bad) {
+        let self = this;
 
         return $.ajax({
             url: url,
@@ -153,7 +155,9 @@ class YandexSourceImpl extends Source {
             contentType: 'application/json',
             dataType: "json",
             error: bad,
-            beforeSend: this.setHeader
+            beforeSend: function (xhr){
+                self.setHeader(xhr);
+            }
         });
     }
 
