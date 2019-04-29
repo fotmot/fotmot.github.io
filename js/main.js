@@ -14,6 +14,10 @@ if (current_method == undefined) {
     current_method = METHOD_INTERNET;
 }
 
+let mainSource = Source.getSource(current_method);
+let prevSource = new PreviousSourceImpl();
+
+
 
 function setMeta(html, src) {
     overlay.html(html);
@@ -132,27 +136,13 @@ $(function () {
         clearTimeout(timer);
         if (!isPaused) {
             if (srcObject != undefined) {
-                if (srcObject.type == 'video') {
-                    playVideo(srcObject.src, srcObject.html);
-                } else {
-                    showImage(srcObject.src, srcObject.html);
-                }
+                prevSource.show(srcObject);
             } else {
                 buffer.push({src: video.data('prev-src'), html: overlay.html(), type: video.data('prev-type')});
                 if (buffer.length >= 1000) {
                     buffer = buffer.slice(500, 999);
                 }
-                switch (current_method) {
-                    case METHOD_YANDEX: {
-                        checkYandex();
-                        showYandex();
-                        break;
-                    }
-                    case METHOD_INTERNET: {
-                        showPixel();
-                        break;
-                    }
-                }
+                mainSource.show();
             }
         }
         timer = setTimeout(startLoop, interval);

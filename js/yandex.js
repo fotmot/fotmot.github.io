@@ -75,7 +75,7 @@ function q(type, url, params, bad) {
         contentType: 'application/json',
         dataType: "json",
         error: bad,
-        beforeSend: setHeader
+        beforeSend: this.setHeader
     });
 }
 
