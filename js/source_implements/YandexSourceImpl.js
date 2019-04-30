@@ -5,7 +5,7 @@ class YandexSourceImpl extends Source {
     static YAD_METHOD_LAST = 2;
     static YAD_AUTOLOAD_FOLDER = 'photostream';
 
-    constructor(){
+    constructor() {
         super();
         this.yad = Cookies.get('yad');
         this.checkCache();
@@ -13,7 +13,7 @@ class YandexSourceImpl extends Source {
     }
 
     getDefaultSettings() {
-        return {method: 1, folder: 'photostream', total: {}, total_created:(new Date()).getTime()};
+        return {method: 1, folder: 'photostream', total: {}, total_created: (new Date()).getTime()};
     }
 
     show() {
@@ -21,8 +21,7 @@ class YandexSourceImpl extends Source {
         if (this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_RANDOM) {
             if (this.settingsGetValue('folder') == YandexSourceImpl.YAD_AUTOLOAD_FOLDER) { //узнаем настоящее имя папки
                 this.getDisk('system_folders.photostream', function (response) {
-                    console.log('Folder is:', response.system_folders.photostream);
-                    self.settingsSetValue('folder',response.system_folders.photostream);
+                    self.settingsSetValue('folder', response.system_folders.photostream);
                     self.loadFolder();
                 }, function (jqXHR, resp) {
                     if (jqXHR.status == 401 || jqXHR.status == 401) {
@@ -32,17 +31,14 @@ class YandexSourceImpl extends Source {
                     }
                 })
             } else {
-                //check folder exist
-                console.log(localStorage);
                 this.loadFolder();
             }
         }
     }
 
     loadFolder(folder) {
-        if(folder==undefined){
+        if (folder == undefined) {
             folder = this.settingsGetValue('folder');
-            console.log(folder);
         }
         let totalSettings = this.settingsGetValue('total');
         if (totalSettings[folder] == undefined) {
@@ -55,11 +51,11 @@ class YandexSourceImpl extends Source {
                 } else if (total < 1) {
                     self.chooseFolder();
                 } else {
-                    totalSettings['folder']=total;
-                    self.settingsSaveValue('total',totalSettings);
+                    totalSettings[folder] = total;
+                    self.settingsSetValue('total', totalSettings);
                     self.loadResource(folder);
                 }
-            }, function (jqXHR,resp) {
+            }, function (jqXHR, resp) {
                 if (jqXHR.status == 401 || jqXHR.status == 401) {
                     self.autorize();
                 } else {
@@ -110,8 +106,8 @@ class YandexSourceImpl extends Source {
     checkCache() {
         if (this.settingsGetValue('total_created') + 86400000 < (new Date()).getTime()) {
             //сбрасываем кеш
-            this.settingsSetValue('total',{});
-            this.settingsSetValue('total_created',(new Date()).getTime());
+            this.settingsSetValue('total', {});
+            this.settingsSetValue('total_created', (new Date()).getTime());
         }
     }
 
@@ -155,7 +151,7 @@ class YandexSourceImpl extends Source {
             contentType: 'application/json',
             dataType: "json",
             error: bad,
-            beforeSend: function (xhr){
+            beforeSend: function (xhr) {
                 self.setHeader(xhr);
             }
         });
