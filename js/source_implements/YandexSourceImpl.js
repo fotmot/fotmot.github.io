@@ -19,14 +19,34 @@ class YandexSourceImpl extends Source {
     getCustomPreferences() {
         let self = this;
         return {
-            custom_folder: {
-                type: 'button', text: 'Select folder', callback: function () {
-                    self.chooseFolder();
-                }
-            },
-            show_method: {
+            'Метод показа': {
                 type: 'select', items: [{1: 'random'}, {2: 'latest'}], callback: function (selected) {
                     self.settingsSetValue('method', $(selected.currentTarget).val());
+                }
+            },
+            'Папка': {
+                type: 'multi', controls: [
+                    {
+                        type: 'text',
+                        text: self.settingsGetValue('folder'),
+                        attr: [
+                            {key: 'data-path', value: self.settingsGetValue('folder')},
+                            {key: 'id', value: 'foldercontainer'}
+                        ],
+                    },
+                    {
+                        type: 'button',
+                        text: 'Установить папку',
+                        callback: function () {
+                            let path = $('#foldercontainer').data('path');
+                            self.settingsSetValue('folder', path);
+                        }
+                    }
+                ]
+            },
+            'Выбрать папку': {
+                type: 'button', text: 'Select folder', callback: function () {
+                    self.chooseFolder($('#foldercontainer'));
                 }
             }
         };
@@ -175,13 +195,13 @@ class YandexSourceImpl extends Source {
 
     folders = [];
 
-    chooseFolder() {
+    chooseFolder(container) {
         let self = this;
         this.pushFolder('disk:/', function (item) {
             self.folders.push(item);
             console.log('not last');
         }, function () {
-            self.showFolders(self.folders);
+            self.showFolders(self.folders, container);
         });
 
     }
@@ -210,13 +230,23 @@ class YandexSourceImpl extends Source {
             });
     }
 
-    showFolders(folders) {
+    showFolders(folders, container) {
         let tree = $('#jstree');
+        tree.on("changed.jstree", function (e, data) {
+            container.data('path', data.node.data.path);
+            container.text(data.node.text);
+        });
         let root = $('<ul/>');
         root.appendTo(tree);
         folders.forEach(function (item) {
-            $('<li/>', {text: item.name}).appendTo(root);
+            $('<li/>', {text: item.name, 'data-path': item.path}).appendTo(root);
         });
-        tree.jstree();
+        tree.jstree({
+            "core": {
+                "multiple": false,
+                "animation": 0
+            }
+        });
+        tree.show();
     }
 }

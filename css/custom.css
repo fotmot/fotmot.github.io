@@ -74,5 +74,8 @@ select {
     background-color: #cccccc;
     margin: 20px;
     border-style: inset;
+    overflow-y: scroll;
+    height: 70%;
+    display: none;
 }
 
