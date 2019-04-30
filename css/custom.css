@@ -57,7 +57,7 @@ header {
     padding: 5%;
 }
 
-#settings > select {
+select {
     font-size: xx-large;
 }
 
@@ -67,5 +67,11 @@ header {
     border-bottom-right-radius: 15px;
     border-top-right-radius: 15px;
     opacity: 0.5;
+}
+
+#jstree {
+    position: absolute;
+    left: 45%;
+    top: 40%;
 }
 

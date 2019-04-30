@@ -18,7 +18,6 @@ let mainSource = Source.getSource(current_method);
 let prevSource = new PreviousSourceImpl();
 
 
-
 function setMeta(html, src) {
     overlay.html(html);
     let ov_width = overlay.width();
@@ -73,6 +72,24 @@ function toggleSettings() {
             sbut.html('&#10006;');
             sbut.css({opacity: 0.5});
         });
+        let custom_pref = mainSource.getCustomPreferences();
+        let div_custom_pref = $('#custom_prefs');
+        div_custom_pref.html("");
+        Object.keys(custom_pref).forEach(function (key) {
+            let item = custom_pref[key];
+            if (item.type == 'select') {
+                let select = $('<select/>', {change: item.callback});
+                item.items.forEach(function (subitem) {
+                    Object.keys(subitem).forEach(function (option_key) {
+                        $('<option/>', {text: subitem[option_key], value: option_key}).appendTo(select);
+                    });
+                });
+                select.appendTo(div_custom_pref).before(`<label>${key}: </label>`).after('<br/>');
+            } else if (item.type == 'button') {
+                let button = $('<button/>', {click: item.callback, text: item.text});
+                button.appendTo(div_custom_pref).before(`<label>${key}: </label>`).after('<br/>');
+            }
+        })
     } else {
         settings.animate({
             left: "-=105%"

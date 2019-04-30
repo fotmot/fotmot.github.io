@@ -16,6 +16,22 @@ class YandexSourceImpl extends Source {
         return {method: 1, folder: 'photostream', total: {}, total_created: (new Date()).getTime()};
     }
 
+    getCustomPreferences() {
+        let self = this;
+        return {
+            custom_folder: {
+                type: 'button', text: 'Select folder', callback: function () {
+                    self.chooseFolder();
+                }
+            },
+            show_method: {
+                type: 'select', items: [{1: 'random'}, {2: 'latest'}], callback: function (selected) {
+                    self.settingsSetValue('method', $(selected.currentTarget).val());
+                }
+            }
+        };
+    }
+
     show() {
         let self = this;
         if (this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_RANDOM) {
@@ -157,7 +173,50 @@ class YandexSourceImpl extends Source {
         });
     }
 
+    folders = [];
+
     chooseFolder() {
-        console.log('Let choose folder');
+        let self = this;
+        this.pushFolder('disk:/', function (item) {
+            self.folders.push(item);
+            console.log('not last');
+        }, function () {
+            self.showFolders(self.folders);
+        });
+
+    }
+
+    pushFolder(path, eachItemCallback, doneCallbback = function () {
+    }) {
+        this.getResources({
+                path: path,
+                fields: '_embedded.items.name,_embedded.items.type,_embedded.items.path',
+                sort: 'type',
+                limit: 100
+            }
+            , function (resp) {
+                resp._embedded.items.forEach(function (item) {
+                    if (item.type == 'dir') {
+                        eachItemCallback(item);
+                    }
+                });
+                doneCallbback();
+            }, function (jqXHR, resp) {
+                if (jqXHR.status == 401 || jqXHR.status == 401) {
+                    self.autorize();
+                } else {
+                    console.log(jqXHR)
+                }
+            });
+    }
+
+    showFolders(folders) {
+        let tree = $('#jstree');
+        let root = $('<ul/>');
+        root.appendTo(tree);
+        folders.forEach(function (item) {
+            $('<li/>', {text: item.name}).appendTo(root);
+        });
+        tree.jstree();
     }
 }
