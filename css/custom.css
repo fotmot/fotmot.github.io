@@ -57,7 +57,7 @@ header {
     padding: 5%;
 }
 
-select {
+select, button {
     font-size: xx-large;
 }
 

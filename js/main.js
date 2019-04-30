@@ -77,20 +77,20 @@ function toggleSettings() {
         div_custom_pref.html("");
         Object.keys(custom_pref).forEach(function (key) {
             let item = custom_pref[key];
-            if(item.type == 'multi'){
-                item.controls.forEach(function(i,index){
+            if (item.type == 'multi') {
+                item.controls.forEach(function (i, index) {
                     let before = '';
                     let after = '';
-                    if(index==0){
+                    if (index == 0) {
                         before = `<label>${key}: </label>`;
                     }
-                    if(index == item.controls.length-1){
+                    if (index == item.controls.length - 1) {
                         after = '<br/>';
                     }
-                    drawItem(i,div_custom_pref,before,after);
+                    drawItem(i, div_custom_pref, before, after);
                 })
-            }else{
-                drawItem(item,div_custom_pref,`<label>${key}: </label>`,'<br/>');
+            } else {
+                drawItem(item, div_custom_pref, `<label>${key}: </label>`, '<br/>');
             }
 
         })
@@ -106,24 +106,38 @@ function toggleSettings() {
 
 }
 
-function drawItem(item,div_custom_pref,before,after){
+function drawItem(item, div_custom_pref, before, after) {
     let control = undefined;
     if (item.type == 'select') {
         control = $('<select/>', {change: item.callback});
         item.items.forEach(function (subitem) {
             Object.keys(subitem).forEach(function (option_key) {
-                $('<option/>', {text: subitem[option_key], value: option_key}).appendTo(control);
+                if (option_key != 'selected') {
+                    if (subitem.selected != undefined) {
+                        $('<option/>', {
+                            text: subitem[option_key],
+                            value: option_key,
+                            selected: 'selected'
+                        }).appendTo(control);
+                    } else {
+                        $('<option/>', {text: subitem[option_key], value: option_key}).appendTo(control);
+
+                    }
+                }
+
             });
         });
     } else if (item.type == 'button') {
         control = $('<button/>', {click: item.callback, text: item.text});
     } else if (item.type == 'text') {
         control = $('<span/>', {text: item.text});
+    } else if (item.type == 'image') {
+        control = $('<img/>', {src: item.src, click: item.callback});
     }
     control.appendTo(div_custom_pref).before(before).after(after);
-    if(item.attr !== undefined){
+    if (item.attr !== undefined) {
         console.log(item.attr);
-        item.attr.forEach(function(attr){
+        item.attr.forEach(function (attr) {
             control.attr(attr.key, attr.value);
         });
     }

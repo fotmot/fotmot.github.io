@@ -18,10 +18,14 @@ class YandexSourceImpl extends Source {
 
     getCustomPreferences() {
         let self = this;
+        let method = parseInt(self.settingsGetValue('method'));
+        let items = [{1: 'random'}, {2: 'latest'}];
+        items[method - 1]['selected'] = true;
         return {
             'Метод показа': {
-                type: 'select', items: [{1: 'random'}, {2: 'latest'}], callback: function (selected) {
+                type: 'select', items: items, callback: function (selected) {
                     self.settingsSetValue('method', $(selected.currentTarget).val());
+                    toggleSettings();
                 }
             },
             'Папка': {
@@ -31,23 +35,32 @@ class YandexSourceImpl extends Source {
                         text: self.settingsGetValue('folder'),
                         attr: [
                             {key: 'data-path', value: self.settingsGetValue('folder')},
-                            {key: 'id', value: 'foldercontainer'}
+                            {key: 'id', value: 'foldercontainer'},
                         ],
+                    },
+                    {
+                        type: 'image',
+                        src: '/img/folder.png',
+                        attr: [
+                            {key: 'style', value: 'width:24px;height:24px'}
+                        ],
+                        callback: function () {
+                            self.chooseFolder($('#foldercontainer'));
+                        }
                     },
                     {
                         type: 'button',
                         text: 'Установить папку',
+                        attr: [
+                            {key: 'style', value: 'display:none'}
+                        ],
                         callback: function () {
                             let path = $('#foldercontainer').data('path');
                             self.settingsSetValue('folder', path);
+                            toggleSettings();
                         }
                     }
                 ]
-            },
-            'Выбрать папку': {
-                type: 'button', text: 'Select folder', callback: function () {
-                    self.chooseFolder($('#foldercontainer'));
-                }
             }
         };
     }
@@ -235,6 +248,7 @@ class YandexSourceImpl extends Source {
         tree.on("changed.jstree", function (e, data) {
             container.data('path', data.node.data.path);
             container.text(data.node.text);
+            container.next().next().show();
         });
         let root = $('<ul/>');
         root.appendTo(tree);
