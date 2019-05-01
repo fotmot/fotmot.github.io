@@ -10,6 +10,8 @@ class YandexSourceImpl extends Source {
         this.yad = Cookies.get('yad');
         this.checkCache();
         this.checkAuth();
+        this.last = [];
+        this.last_showed = 0;
     }
 
     getDefaultSettings() {
@@ -81,6 +83,33 @@ class YandexSourceImpl extends Source {
                 })
             } else {
                 this.loadFolder();
+            }
+        }else if(this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_LAST){
+            if(this.last.length==0){
+                //fields:items.exif,items.file,items.media_type
+                //limit
+                //media_type image,video
+                this.getLastUploaded({fields:'items.exif,items.file,items.media_type', limit:1000,media_type:'image,video' },function(resp){
+                    self.last = resp.items;
+                    show();
+                },function (jqXHR) {
+                    if (jqXHR.status == 401 || jqXHR.status == 401) {
+                        self.autorize();
+                    } else {
+                        self.chooseFolder();
+                    }
+                })
+            }else {
+                let item = this.last[this.last_showed++];
+                if(item==undefined){
+                    this.last_showed=0;
+                    item = this.last[this.last_showed++];
+                }
+                if(item.media_type=='image'){
+                    showImage(item.file,item.exif.date_time);
+                }else {
+                    playVideo(item.file,item.exif.date_time);
+                }
             }
         }
     }
@@ -190,6 +219,11 @@ class YandexSourceImpl extends Source {
 
     getResources(params, success, fail) {
         this.q('GET', YandexSourceImpl.URL + '/disk/resources', params, fail).done(success);
+    }
+
+    getLastUploaded(params, success, fail) {
+
+        this.q('GET', YandexSourceImpl.URL + '/disk/resources/last-uploaded', params, fail).done(success);
     }
 
     q(type, url, params, bad) {
