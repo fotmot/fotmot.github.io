@@ -60,11 +60,11 @@ function showImage(src, html = '') {
     video[0].load();
 }
 
-function toggleSettings() {
+function toggleSettings(preset=false) {
     let settings = $('#settings');
     let sbut = $('#sbut');
 
-    if (settings.is(':hidden')) {
+    if (settings.is(':hidden') || preset==true) {
         settings.show();
         settings.animate({
             left: "+=105%"
@@ -149,7 +149,7 @@ function changeMethod(method) {
     }
     current_method = method;
     mainSource = Source.getSource(current_method);
-    startLoop();
+    toggleSettings(true);
 }
 
 function setPrevNextBindings() {
