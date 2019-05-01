@@ -49,7 +49,7 @@ function showImage(src, html = '') {
     console.log('showImage');
     if (video == undefined) return;
     setMeta(html, src);
-    video.css({background: 'transparent url("' + src + '") 50% 50% / contain no-repeat'});
+    video.css({background: 'transparent url("' + src + '")', backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: window.innerWidth+'px '+window.innerHeight+'px'});
     video.off('ended');
     video[0].pause();
     video.attr('controls', false);
