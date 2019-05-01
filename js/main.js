@@ -5,6 +5,7 @@ let video;
 let overlay;
 let container;
 let startLoop;
+let isPaused = false;
 
 let buffer = [];
 
@@ -188,7 +189,7 @@ $(function () {
     });
 
 
-    let isPaused = false;
+
     let interval = 30000;
 
 
