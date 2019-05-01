@@ -121,7 +121,7 @@ class YandexSourceImpl extends Source {
         let self = this;
         this.getResources({path: folder, limit: 1, offset: offset}, function (response) {
                 let item = response._embedded.items[0];
-                if (item.type == 'file') {
+                if (item != undefined && item.type == 'file') {
                     if (item.media_type == 'image') {
                         showImage(item.file, item.exif.date_time);
                     } else if (item.media_type == 'video') {
@@ -130,8 +130,10 @@ class YandexSourceImpl extends Source {
                         console.log('Not image and video', item);
                         self.loadResource(folder);
                     }
-                } else if (item.type == 'dir') {
+                } else if (item != undefined && item.type == 'dir') {
                     self.loadFolder(item.path)
+                }else{
+                    self.loadResource(folder);
                 }
             }
             , self.handleError);
