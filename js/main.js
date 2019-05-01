@@ -41,22 +41,20 @@ function playVideo(src, html = '') {
     video.data('prev-src', src);
     video.attr('src', src);
     video.attr('autoplay', true);
-    video.attr('controls', true);
+    video.attr('controls', false);
     video[0].load();
 }
 
 function showImage(src, html = '') {
-    console.log('showImage');
     if (video == undefined) return;
     setMeta(html, src);
     video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
     video[0].pause();
-    video.attr('controls', false);
     video.attr('autoplay', false);
     video.data('prev-type', 'image');
     video.data('prev-src', src);
-    video.attr('src', src);
+    video.attr('src', '/media/output.mp4');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
     video[0].load();
 }
