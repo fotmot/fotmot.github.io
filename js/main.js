@@ -153,7 +153,7 @@ function changeMethod(method) {
 }
 
 function setPrevNextBindings() {
-    video.click(function (event) {
+    video.dblclick(function (event) {
         let scw = window.innerWidth;
         let clickX = event.offsetX;
         if (clickX < scw / 4) {
@@ -162,6 +162,7 @@ function setPrevNextBindings() {
         if (clickX > 3 * scw / 4) {
             startLoop();
         }
+        event.preventDefault();
     });
 }
 
