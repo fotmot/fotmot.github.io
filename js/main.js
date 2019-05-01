@@ -201,7 +201,9 @@ $(function () {
                 if (buffer.length >= 1000) {
                     buffer = buffer.slice(500, 999);
                 }
-                mainSource.show();
+                if(!isPaused){
+                    mainSource.show();
+                }
             }
         }
         timer = setTimeout(startLoop, interval);
