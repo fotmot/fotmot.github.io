@@ -49,7 +49,7 @@ function showImage(src, html = '') {
     console.log('showImage');
     if (video == undefined) return;
     setMeta(html, src);
-    video.css({background: 'transparent url("' + src + '")', backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: window.innerWidth+'px '+window.innerHeight+'px'});
+    video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
     video[0].pause();
     video.attr('controls', false);
