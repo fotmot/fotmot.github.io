@@ -156,10 +156,10 @@ function setPrevNextBindings() {
     video.dblclick(function (event) {
         let scw = window.innerWidth;
         let clickX = event.offsetX;
-        if (clickX < scw / 4) {
+        if (clickX < 2*scw / 5) {
             startLoop(buffer.length > 1 ? buffer.pop() : undefined);
         }
-        if (clickX > 3 * scw / 4) {
+        if (clickX > 3 * scw / 5) {
             startLoop();
         }
         event.preventDefault();
@@ -172,13 +172,13 @@ $(function () {
     container = $("#container");
     setMeta('← Выбрать источник');
     setPrevNextBindings();
-    $(document).dblclick(function () {
-        if (!document.webkitIsFullScreen) {
-            window.document.body.webkitRequestFullscreen();
-        } else {
-            window.document.webkitCancelFullScreen();
-        }
-    });
+    // $(document).dblclick(function () {
+    //     if (!document.webkitIsFullScreen) {
+    //         window.document.body.webkitRequestFullscreen();
+    //     } else {
+    //         window.document.webkitCancelFullScreen();
+    //     }
+    // });
 
     $('#sel_method').val(current_method);
     //for starting
