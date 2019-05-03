@@ -37,12 +37,19 @@ function playVideo(src, html = '') {
         video.off('ended');
         startLoop();
     });
+    video.off('canplaythrough');
+    video.on('canplaythrough', function () {
+        video[0].play();
+    });
     video.data('prev-type', 'video');
     video.data('prev-src', src);
     video.attr('src', src);
-    video.attr('autoplay', true);
+
     video.attr('controls', false);
     video[0].load();
+    if (video[0].readyState > 3) {
+        video[0].play();
+    }
 }
 
 function showImage(src, html = '') {
