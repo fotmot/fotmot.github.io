@@ -37,19 +37,12 @@ function playVideo(src, html = '') {
         video.off('ended');
         startLoop();
     });
-    video.off('canplaythrough');
-    video.on('canplaythrough', function () {
-        video[0].play();
-    });
     video.data('prev-type', 'video');
     video.data('prev-src', src);
     video.attr('src', src);
-
+    video.attr('autoplay', true);
     video.attr('controls', false);
     video[0].load();
-    if (video[0].readyState > 3) {
-        video[0].play();
-    }
 }
 
 function showImage(src, html = '') {
@@ -57,7 +50,6 @@ function showImage(src, html = '') {
     setMeta(html, src);
     video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
-    video.off('canplaythrough');
     video[0].pause();
     video.attr('autoplay', false);
     video.data('prev-type', 'image');
