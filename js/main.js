@@ -57,6 +57,7 @@ function showImage(src, html = '') {
     setMeta(html, src);
     video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
+    video.off('canplaythrough');
     video[0].pause();
     video.attr('autoplay', false);
     video.data('prev-type', 'image');
