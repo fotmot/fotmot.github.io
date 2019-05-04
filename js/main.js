@@ -6,6 +6,7 @@ let overlay;
 let container;
 let startLoop;
 let isPaused = false;
+let cache;
 
 let buffer = [];
 
@@ -45,15 +46,21 @@ function playVideo(src, html = '') {
     video[0].load();
 }
 
-function showImage(src, html = '') {
+function showImage(src, html = '',c = true) {
     if (video == undefined) return;
+    if(c){
+        cache.attr('scr',scr);
+        setTimeout(function () {
+            showImage(src,html,false);
+        },2000);
+        return;
+    }
     setMeta(html, src);
     video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
     video[0].pause();
     video.attr('autoplay', false);
     video.attr('controls', false);
-
     video.data('prev-type', 'image');
     video.data('prev-src', src);
     video.attr('src', '/media/output.mp4');
@@ -171,6 +178,7 @@ $(function () {
     video = $("#video");
     overlay = $("#meta");
     container = $("#container");
+    cache = $("#cache");
     setMeta('← Выбрать источник');
     setPrevNextBindings();
     $(document).dblclick(function () {
