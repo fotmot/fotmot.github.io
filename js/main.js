@@ -41,7 +41,7 @@ function playVideo(src, html = '') {
     video.data('prev-src', src);
     video.attr('src', src);
     video.attr('autoplay', true);
-    video.attr('controls', false);
+    video.attr('controls', true);
     video[0].load();
 }
 
@@ -52,11 +52,12 @@ function showImage(src, html = '') {
     video.off('ended');
     video[0].pause();
     video.attr('autoplay', false);
+    video.attr('controls', false);
+
     video.data('prev-type', 'image');
     video.data('prev-src', src);
     video.attr('src', '/media/output.mp4');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-    video.attr('controls', false);
     video[0].load();
 }
 
