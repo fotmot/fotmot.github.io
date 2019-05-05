@@ -69,11 +69,11 @@ function showImage(src, html = '',c = true) {
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
 
-function toggleSettings(preset=false) {
+function toggleSettings() {
     let settings = $('#settings');
     let sbut = $('#sbut');
 
-    if (settings.is(':hidden') || preset==true) {
+    if (settings.is(':hidden')) {
         settings.show();
         settings.animate({
             left: "+=105%"
@@ -158,7 +158,6 @@ function changeMethod(method) {
     }
     current_method = method;
     mainSource = Source.getSource(current_method);
-    toggleSettings(true);
 }
 
 function setPrevNextBindings() {
