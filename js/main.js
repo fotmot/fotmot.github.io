@@ -47,8 +47,11 @@ function playVideo(src, html = '') {
 }
 
 function showImage(src, html = '',c = true) {
+    console.log('showImage', c);
     if (video == undefined) return;
-    if(c){
+    video.off('ended');
+    video[0].pause();
+    if(c==true){
         cache.on("load", function() {
             cache.off('load');
             showImage(src,html,false);
@@ -57,8 +60,6 @@ function showImage(src, html = '',c = true) {
         return;
     }
     setMeta(html, src);
-    video.off('ended');
-    video[0].pause();
     video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.attr('autoplay', false);
     video.attr('controls', false);
