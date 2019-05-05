@@ -40,9 +40,9 @@ function playVideo(src, html = '') {
     });
     video.data('prev-type', 'video');
     video.data('prev-src', src);
-    video.attr('src', src);
     video.attr('autoplay', true);
-    video.attr('controls', true);
+    video.attr('controls', false);
+    video.attr('src', src);
     video[0].load();
 }
 
