@@ -53,6 +53,7 @@ function showImage(src, html = '',c = true) {
             cache.off('load');
             showImage(src,html,false);
         });
+        cache.attr('scr',src);
         return;
     }
     setMeta(html, src);
