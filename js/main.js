@@ -57,9 +57,9 @@ function showImage(src, html = '',c = true) {
         return;
     }
     setMeta(html, src);
-    video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.off('ended');
     video[0].pause();
+    video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
     video.attr('autoplay', false);
     video.attr('controls', false);
     video.data('prev-type', 'image');
