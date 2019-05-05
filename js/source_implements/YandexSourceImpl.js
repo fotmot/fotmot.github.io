@@ -84,31 +84,35 @@ class YandexSourceImpl extends Source {
             } else {
                 this.loadFolder();
             }
-        }else if(this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_LAST){
-            if(this.last.length==0){
+        } else if (this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_LAST) {
+            if (this.last.length == 0) {
                 //fields:items.exif,items.file,items.media_type
                 //limit
                 //media_type image,video
-                this.getLastUploaded({fields:'items.exif,items.file,items.media_type', limit:1000,media_type:'image,video' },function(resp){
+                this.getLastUploaded({
+                    fields: 'items.exif,items.file,items.media_type',
+                    limit: 1000,
+                    media_type: 'image,video'
+                }, function (resp) {
                     self.last = resp.items;
                     show();
-                },function (jqXHR) {
+                }, function (jqXHR) {
                     if (jqXHR.status == 401 || jqXHR.status == 401) {
                         self.autorize();
                     } else {
                         self.chooseFolder();
                     }
                 })
-            }else {
+            } else {
                 let item = this.last[this.last_showed++];
-                if(item==undefined){
-                    this.last_showed=0;
+                if (item == undefined) {
+                    this.last_showed = 0;
                     item = this.last[this.last_showed++];
                 }
-                if(item.media_type=='image'){
-                    showImage(item.file,item.exif.date_time);
-                }else {
-                    playVideo(item.file,item.exif.date_time);
+                if (item.media_type == 'image') {
+                    showImage(item.file, item.exif.date_time);
+                } else {
+                    playVideo(item.file, item.exif.date_time);
                 }
             }
         }
@@ -161,7 +165,7 @@ class YandexSourceImpl extends Source {
                     }
                 } else if (item != undefined && item.type == 'dir') {
                     self.loadFolder(item.path)
-                }else{
+                } else {
                     self.loadResource(folder);
                 }
             }

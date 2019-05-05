@@ -1,4 +1,4 @@
-class PreviousSourceImpl extends Source{
+class PreviousSourceImpl extends Source {
     show(src) {
         if (src.type == 'video') {
             playVideo(src.src, src.html);

@@ -46,26 +46,33 @@ function playVideo(src, html = '') {
     video[0].load();
 }
 
-function showImage(src, html = '',c = true) {
+function showImage(src, html = '', c = true) {
     console.log('showImage', c);
     if (video == undefined) return;
     video.off('ended');
     video[0].pause();
-    if(c==true){
-        cache.on("load", function() {
+    if (c == true) {
+        setMeta('<img src="/img/spinner.gif" width="14" height="14"> Loading ... ', src);
+        cache.on("load", function () {
             cache.off('load');
-            showImage(src,html,false);
+            showImage(src, html, false);
         });
-        cache.attr('src',src);
+        cache.attr('src', src);
         return;
     }
     setMeta(html, src);
-    video.css({background: 'transparent url("' + src + '")', backfaceVisibility:'transparent',backgroundRepeat:'no-repeat', backgroundPosition:'center center',backgroundSize: 'auto '+window.innerHeight+'px'});
+    video.css({
+        background: 'transparent url("' + src + '")',
+        backfaceVisibility: 'transparent',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: 'auto ' + window.innerHeight + 'px'
+    });
     video.attr('autoplay', false);
     video.attr('controls', false);
     video.data('prev-type', 'image');
     video.data('prev-src', src);
-    video.attr('src', false);
+    video.attr('src', '');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
 
@@ -164,7 +171,7 @@ function setPrevNextBindings() {
     video.click(function (event) {
         let scw = window.innerWidth;
         let clickX = event.offsetX;
-        if (clickX < 1*scw / 5) {
+        if (clickX < 1 * scw / 5) {
             startLoop(buffer.length > 1 ? buffer.pop() : undefined);
         }
         if (clickX > 4 * scw / 5) {
@@ -197,7 +204,6 @@ $(function () {
     });
 
 
-
     let interval = 30000;
 
 
@@ -211,7 +217,7 @@ $(function () {
                 if (buffer.length >= 1000) {
                     buffer = buffer.slice(500, 999);
                 }
-                if(!isPaused){
+                if (!isPaused) {
                     mainSource.show();
                 }
             }
