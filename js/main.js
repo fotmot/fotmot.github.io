@@ -65,7 +65,7 @@ function showImage(src, html = '',c = true) {
     video.attr('controls', false);
     video.data('prev-type', 'image');
     video.data('prev-src', src);
-    //video.attr('src', '/media/output.mp4');
+    video.attr('src', false);
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
 
