@@ -49,14 +49,9 @@ function playVideo(src, html = '') {
 function showImage(src, html = '',c = true) {
     if (video == undefined) return;
     if(c){
-        cache.one("load", function() {
+        cache.on("load", function() {
             cache.off('load');
             showImage(src,html,false);
-        }).each(function() {
-            cache.off('load');
-            if(this.complete) {
-                $(this).trigger('load'); // For jQuery >= 3.0
-            }
         });
         cache.attr('src',src);
         return;
