@@ -53,6 +53,7 @@ function showImage(src, html = '',c = true) {
             cache.off('load');
             showImage(src,html,false);
         }).each(function() {
+            cache.off('load');
             if(this.complete) {
                 $(this).trigger('load'); // For jQuery >= 3.0
             }
