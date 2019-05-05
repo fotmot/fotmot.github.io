@@ -49,10 +49,10 @@ function playVideo(src, html = '') {
 function showImage(src, html = '',c = true) {
     if (video == undefined) return;
     if(c){
-        cache.attr('scr',scr);
-        setTimeout(function () {
+        cache.on('load',function (){
+            cache.off('load');
             showImage(src,html,false);
-        },2000);
+        });
         return;
     }
     setMeta(html, src);
