@@ -66,7 +66,6 @@ function showImage(src, html = '',c = true) {
     video.data('prev-src', src);
     video.attr('src', '/media/output.mp4');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-    video[0].load();
 }
 
 function toggleSettings(preset=false) {
