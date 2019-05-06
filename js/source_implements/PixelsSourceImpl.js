@@ -4,15 +4,52 @@ class PixelsSourceImpl extends Source {
     static solt = '5b63b49b2bad6f9170000bb1000001e0ebd2b44cee5943cb991356eabb6b2421b03d7';
 
     getDefaultSettings() {
-        return {totalv: 1000, totalp: 1000, fotoVSvideo: 5};
+        return {totalv: 1000, totalp: 1000, fotoVSvideo: 50};
     }
 
     getCustomPreferences() {
-        return {video_show_freq: {type: 'scrallbar'}};
+        let self = this;
+        return {
+            'Процент фоток': {
+                type: 'multi',
+                controls: [
+                    {
+                        type: 'text',
+                        text: self.settingsGetValue('fotoVSvideo') + '% фото',
+                        attr: [
+                            {key: 'id', value: 'per_photo'},
+                        ],
+                    },
+                    {
+                        type: 'range',
+                        attr: [
+                            {key: 'id', value: 'fotoVSvideo'},
+                            {key: 'min', value: 0},
+                            {key: 'man', value: 100},
+                            {key: 'step', value: 1},
+                            {key: 'value', value: self.settingsGetValue('fotoVSvideo')}
+                        ],
+                        callback: function () {
+                            let val = $('#fotoVSvideo').val();
+                            $('#per_photo').text(val + '% фото');
+                            $('#per_video').text((100 - val) + '% видео');
+                            self.settingsSetValue('fotoVSvideo', val);
+                        }
+                    },
+                    {
+                        type: 'text',
+                        text: (100 - self.settingsGetValue('fotoVSvideo')) + '% видео',
+                        attr: [
+                            {key: 'id', value: 'per_video'},
+                        ],
+                    },
+                ]
+            }
+        };
     }
 
     show() {
-        let rnd = PixelsSourceImpl.getRndInt(0, 10);
+        let rnd = PixelsSourceImpl.getRndInt(0, 100);
         if (rnd < this.settingsGetValue('fotoVSvideo')) {
             let settings_key = 'totalp';
             let url = 'v1/curated/?' + $.param({

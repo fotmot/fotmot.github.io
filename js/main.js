@@ -116,7 +116,14 @@ function toggleSettings() {
         }, 1000, function () {
             sbut.html('&#10006;');
             sbut.css({opacity: 0.5});
+            $('body').on('click', function (event) {
+                if ($(event.target).attr('id') == 'video' || $(event.target).attr('id') == 'meta') {
+                    $('body').off('click');
+                    toggleSettings();
+                }
+            });
         });
+
         showSettings();
     } else {
         settings.animate({
@@ -157,7 +164,10 @@ function drawItem(item, div_custom_pref, before, after) {
         control = $('<span/>', {text: item.text});
     } else if (item.type == 'image') {
         control = $('<img/>', {src: item.src, click: item.callback});
+    } else if (item.type == 'range') {
+        control = $('<input/>', {type: 'range', change: item.callback});
     }
+
     control.appendTo(div_custom_pref).before(before).after(after);
     if (item.attr !== undefined) {
         console.log(item.attr);
