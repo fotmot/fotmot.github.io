@@ -44,6 +44,7 @@ function playVideo(src, html = '') {
     video.attr('controls', false);
     video.attr('src', src);
     video[0].load();
+    video.data('loaded', true);
 }
 
 function showImage(src, html = '', c = true) {
@@ -74,6 +75,7 @@ function showImage(src, html = '', c = true) {
     video.data('prev-src', src);
     video.attr('src', '');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+    video.data('loaded', true);
 }
 
 function showSettings() {
@@ -213,7 +215,8 @@ $(function () {
 
     startLoop = function (srcObject) {
         clearTimeout(timer);
-        if (!isPaused) {
+        if (!isPaused && video.data('loaded') == true) {
+            video.data('loaded', 'false');
             if (srcObject != undefined) {
                 prevSource.show(srcObject);
             } else {
@@ -225,6 +228,10 @@ $(function () {
                     mainSource.show();
                 }
             }
+        } else if (isPaused) {
+            console.log('Skip due to isPaused = true');
+        } else {
+            console.log('Skip due to slow network');
         }
         timer = setTimeout(startLoop, interval);
     }
