@@ -7,6 +7,7 @@ let container;
 let startLoop;
 let isPaused = false;
 let cache;
+let showedTime = 0;
 
 let buffer = [];
 
@@ -45,6 +46,7 @@ function playVideo(src, html = '') {
     video.attr('src', src);
     video[0].load();
     video.data('loaded', true);
+    showedTime = (new Date()).getTime();
 }
 
 function showImage(src, html = '', c = true) {
@@ -76,6 +78,7 @@ function showImage(src, html = '', c = true) {
     video.attr('src', '');
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
     video.data('loaded', true);
+    showedTime = (new Date()).getTime();
 }
 
 function showSettings() {
@@ -178,10 +181,10 @@ function setPrevNextBindings() {
         let scw = window.innerWidth;
         let clickX = event.offsetX;
         if (clickX < 1 * scw / 5) {
-            startLoop(buffer.length > 1 ? buffer.pop() : undefined);
+            startLoop(buffer.length > 1 ? buffer.pop() : undefined, true);
         }
         if (clickX > 4 * scw / 5) {
-            startLoop();
+            startLoop(undefined, true);
         }
         event.preventDefault();
     });
@@ -213,9 +216,12 @@ $(function () {
     let interval = 30000;
 
 
-    startLoop = function (srcObject) {
+    startLoop = function (srcObject, forceNext = false) {
         clearTimeout(timer);
-        if (!isPaused && video.data('loaded') == true) {
+        let curTime = (new Date()).getTime();
+        let porog = (showedTime + interval);
+        let timeout = interval;
+        if (!isPaused && video.data('loaded') == true && (porog < curTime || forceNext)) {
             video.data('loaded', 'false');
             if (srcObject != undefined) {
                 prevSource.show(srcObject);
@@ -230,10 +236,14 @@ $(function () {
             }
         } else if (isPaused) {
             console.log('Skip due to isPaused = true');
-        } else {
-            console.log('Skip due to slow network');
+        } else if (video.data('loaded') != true) {
+            console.log('Skip due to image not yet loaded');
+        } else if (porog >= curTime) {
+            console.log('Skip due to image not yet shown enough, need more seconds: ', (porog - curTime) / 1000);
+            timeout = porog - curTime + 1;
         }
-        timer = setTimeout(startLoop, interval);
+
+        timer = setTimeout(startLoop, timeout);
     }
 
 });
