@@ -219,7 +219,7 @@ $(function () {
     startLoop = function (srcObject, forceNext = false) {
         clearTimeout(timer);
         let curTime = (new Date()).getTime();
-        let porog = (showedTime + interval);
+        let porog = (showedTime + interval) + 2000;
         let timeout = interval;
         if (!isPaused && video.data('loaded') == true && (porog < curTime || forceNext)) {
             video.data('loaded', 'false');
