@@ -1,5 +1,6 @@
 const METHOD_INTERNET = '1';
 const METHOD_YANDEX = '2';
+const METHOD_FLICKR = '3';
 
 let video;
 let overlay;
@@ -166,6 +167,8 @@ function drawItem(item, div_custom_pref, before, after) {
         control = $('<img/>', {src: item.src, click: item.callback});
     } else if (item.type == 'range') {
         control = $('<input/>', {type: 'range', change: item.callback});
+    } else if (item.type == 'input') {
+        control = $('<input/>', {type: 'text', change: item.callback});
     }
 
     control.appendTo(div_custom_pref).before(before).after(after);
@@ -229,9 +232,9 @@ $(function () {
     startLoop = function (srcObject, forceNext = false) {
         clearTimeout(timer);
         let curTime = (new Date()).getTime();
-        let porog = (showedTime + interval) + 2000;
+        let porog = (showedTime + interval) - 2000;
         let timeout = interval;
-        if (!isPaused && video.data('loaded') == true && (porog < curTime || forceNext)) {
+        if (!isPaused && video.data('loaded') == true && ((porog < curTime) || forceNext)) {
             video.data('loaded', 'false');
             if (srcObject != undefined) {
                 prevSource.show(srcObject);

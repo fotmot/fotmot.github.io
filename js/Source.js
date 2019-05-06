@@ -20,6 +20,8 @@ class Source {
                 return new PixelsSourceImpl();
             case 2:
                 return new YandexSourceImpl();
+            case 3:
+                return new FlickrSourceImpl();
         }
     }
 
