@@ -76,6 +76,30 @@ function showImage(src, html = '', c = true) {
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
 
+function showSettings() {
+    let custom_pref = mainSource.getCustomPreferences();
+    let div_custom_pref = $('#custom_prefs');
+    div_custom_pref.html("");
+    Object.keys(custom_pref).forEach(function (key) {
+        let item = custom_pref[key];
+        if (item.type == 'multi') {
+            item.controls.forEach(function (i, index) {
+                let before = '';
+                let after = '';
+                if (index == 0) {
+                    before = `<label>${key}: </label>`;
+                }
+                if (index == item.controls.length - 1) {
+                    after = '<br/>';
+                }
+                drawItem(i, div_custom_pref, before, after);
+            })
+        } else {
+            drawItem(item, div_custom_pref, `<label>${key}: </label>`, '<br/>');
+        }
+    });
+}
+
 function toggleSettings() {
     let settings = $('#settings');
     let sbut = $('#sbut');
@@ -88,28 +112,7 @@ function toggleSettings() {
             sbut.html('&#10006;');
             sbut.css({opacity: 0.5});
         });
-        let custom_pref = mainSource.getCustomPreferences();
-        let div_custom_pref = $('#custom_prefs');
-        div_custom_pref.html("");
-        Object.keys(custom_pref).forEach(function (key) {
-            let item = custom_pref[key];
-            if (item.type == 'multi') {
-                item.controls.forEach(function (i, index) {
-                    let before = '';
-                    let after = '';
-                    if (index == 0) {
-                        before = `<label>${key}: </label>`;
-                    }
-                    if (index == item.controls.length - 1) {
-                        after = '<br/>';
-                    }
-                    drawItem(i, div_custom_pref, before, after);
-                })
-            } else {
-                drawItem(item, div_custom_pref, `<label>${key}: </label>`, '<br/>');
-            }
-
-        })
+        showSettings();
     } else {
         settings.animate({
             left: "-=105%"
@@ -165,6 +168,7 @@ function changeMethod(method) {
     }
     current_method = method;
     mainSource = Source.getSource(current_method);
+    showSettings();
 }
 
 function setPrevNextBindings() {

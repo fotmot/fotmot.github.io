@@ -10,6 +10,19 @@ class Source {
         this.settings = JSON.parse(storedSettings);
     }
 
+    static getRndInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    static getSource(current_method) {
+        switch (parseInt(current_method)) {
+            case 1:
+                return new PixelsSourceImpl();
+            case 2:
+                return new YandexSourceImpl();
+        }
+    }
+
     show() {
 
     }
@@ -29,18 +42,5 @@ class Source {
 
     getCustomPreferences() {
         return {};
-    }
-
-    static getRndInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    static getSource(current_method) {
-        switch (parseInt(current_method)) {
-            case 1:
-                return new PixelsSourceImpl();
-            case 2:
-                return new YandexSourceImpl();
-        }
     }
 }
