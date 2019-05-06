@@ -30,7 +30,7 @@ function setMeta(html, src) {
     overlay.parent().css('left', position);
 }
 
-function playVideo(src, html = '') {
+function playVideo(src, html = '', additionalAction) {
     if (video == undefined || src == undefined || src.trim() == '') return;
     clearTimeout(timer);
     setMeta(html);
@@ -47,11 +47,13 @@ function playVideo(src, html = '') {
     video.attr('src', src);
     video[0].load();
     video.data('loaded', true);
+    if (additionalAction != undefined) {
+        additionalAction(video[0]);
+    }
     showedTime = (new Date()).getTime();
 }
 
 function showImage(src, html = '', c = true) {
-    console.log('showImage', c);
     if (video == undefined) return;
     video.off('ended');
     video[0].pause();
@@ -127,12 +129,14 @@ function toggleSettings() {
 
         showSettings();
     } else {
+        $('body').off('click');
         settings.animate({
             left: "-=105%"
         }, 1000, function () {
             settings.hide();
             sbut.html('&#9776;');
             sbut.css({opacity: 1});
+
         });
     }
 
@@ -169,11 +173,12 @@ function drawItem(item, div_custom_pref, before, after) {
         control = $('<input/>', {type: 'range', change: item.callback});
     } else if (item.type == 'input') {
         control = $('<input/>', {type: 'text', change: item.callback});
+    } else if (item.type == 'checkbox') {
+        control = $('<input/>', {type: 'checkbox', change: item.callback});
     }
 
     control.appendTo(div_custom_pref).before(before).after(after);
     if (item.attr !== undefined) {
-        console.log(item.attr);
         item.attr.forEach(function (attr) {
             control.attr(attr.key, attr.value);
         });

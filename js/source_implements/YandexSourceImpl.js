@@ -4,6 +4,7 @@ class YandexSourceImpl extends Source {
     static YAD_METHOD_RANDOM = 1;
     static YAD_METHOD_LAST = 2;
     static YAD_AUTOLOAD_FOLDER = 'photostream';
+    folders = [];
 
     constructor() {
         super();
@@ -15,7 +16,13 @@ class YandexSourceImpl extends Source {
     }
 
     getDefaultSettings() {
-        return {method: 1, folder: 'photostream', total: {}, total_created: (new Date()).getTime()};
+        return {
+            method: 1,
+            folder: 'photostream',
+            total: {},
+            total_created: (new Date()).getTime(),
+            motion_photo: true
+        };
     }
 
     getCustomPreferences() {
@@ -28,6 +35,16 @@ class YandexSourceImpl extends Source {
                 type: 'select', items: items, callback: function (selected) {
                     self.settingsSetValue('method', $(selected.currentTarget).val());
                     toggleSettings();
+                }
+            },
+            'Photo motion (Samsung)': {
+                type: 'checkbox',
+                attr: [
+                    {key: 'id', value: 'motion_photo_settings'},
+                    {key: 'checked', value: self.settingsGetValue('motion_photo')},
+                ],
+                callback: function () {
+                    self.settingsSetValue('motion_photo', $('#motion_photo_settings').is(':checked'));
                 }
             },
             'Папка': {
@@ -156,7 +173,12 @@ class YandexSourceImpl extends Source {
                 let item = response._embedded.items[0];
                 if (item != undefined && item.type == 'file') {
                     if (item.media_type == 'image') {
-                        showImage(item.file, item.exif.date_time);
+                        if (self.settingsGetValue('motion_photo') && item.size > 1 * 1024 * 1024) {
+                            self.extractVideoAndPlay(item.file, item.exif.date_time);
+                        } else {
+                            showImage(item.file, item.exif.date_time);
+                        }
+
                     } else if (item.media_type == 'video') {
                         playVideo(item.file, item.exif.date_time);
                     } else {
@@ -246,8 +268,6 @@ class YandexSourceImpl extends Source {
         });
     }
 
-    folders = [];
-
     chooseFolder(container) {
         let self = this;
         this.pushFolder('disk:/', function (item) {
@@ -302,5 +322,57 @@ class YandexSourceImpl extends Source {
             }
         });
         tree.show();
+    }
+
+    extractVideoAndPlay(file, date_time) {
+        //playVideo(item.file, item.exif.date_time);
+        let self = this;
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', file, true);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function (e) {
+            if (this.status === 206 || this.status === 200) {
+                var byteArray = new Uint8Array(this.response);
+                var index = self.findIndex(byteArray);
+                if (index >= 0) {
+                    let videoArray = byteArray.slice(index);
+                    let blobVideo = new Blob([videoArray], {type: 'video/h264'});
+                    let src = window.URL.createObjectURL(blobVideo);
+                    playVideo(src, date_time, function (video) {
+                        video.loop = true;
+                        video.defaultPlaybackRate = 0.4;
+                        video.playbackRate = 0.4;
+                        setTimeout(function () {
+                            video.loop = false;
+                            video.defaultPlaybackRate = 1;
+                            video.playbackRate = 1;
+                            video.pause();
+                            $(video).trigger('ended');
+                        }, 30000);
+                    });
+                    return;
+                }
+            }
+            showImage(file, date_time);
+        }
+        xhr.send();
+    }
+
+    findIndex(arr) {
+        let search = [116, 111, 95, 68, 97, 116, 97];
+        let index = 0;
+        top:
+            while (index < arr.length) {
+                let prevGood = arr.indexOf(97, index);
+                if (prevGood < 0) return -1;
+                for (let i = 1; i <= 5; i++) {
+                    if (arr[prevGood - i] !== search[6 - i]) {
+                        index = prevGood + 1;
+                        continue top;
+                    }
+                }
+                return prevGood + 1;
+            }
+        return -1;
     }
 }
