@@ -344,6 +344,11 @@ class YandexSourceImpl extends Source {
         //playVideo(item.file, item.exif.date_time);
         let self = this;
         let xhr = new XMLHttpRequest();
+        if (file.includes("?")) {
+            file += '&_rnd=' + (new Date()).getTime();
+        } else {
+            file += '?_rnd=' + (new Date()).getTime();
+        }
         xhr.open('GET', file, true);
         xhr.responseType = 'arraybuffer';
         xhr.onload = function (e) {

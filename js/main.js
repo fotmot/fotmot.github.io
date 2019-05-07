@@ -54,7 +54,6 @@ function playVideo(src, html = '', additionalAction) {
 }
 
 function showImage(src, html = '', c = true, callback) {
-    console.log('showImage', src.length, c, callback);
     if (video == undefined) return;
     video.off('ended');
     video[0].pause();
