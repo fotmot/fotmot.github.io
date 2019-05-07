@@ -1,7 +1,4 @@
 class GooglePhotoSourceImpl extends Source {
-    static cid = '222308987197-jtfseia6er4a7kjdoced5vkjnsb047bb.apps.googleusercontent.com';
-    static api_key = 'AIzaSyBuAu62CiLDDDNwWFN72YRVoS7Qt8eQ01E';
-    static SCOPE = 'https://www.googleapis.com/auth/photoslibrary.readonly';
 
     constructor() {
         super();
@@ -29,7 +26,10 @@ class GooglePhotoSourceImpl extends Source {
                 if (isAuthorized) {
                     self.getPhotos('');
                 } else {
-                    self.GoogleAuth.signIn();
+                    self.GoogleAuth.signIn().then(function () {
+                    }, function (error) {
+                        if (error) alert('Пожалуйста, разрешите всплывающие окна и обновите страницу')
+                    });
                 }
             });
         });
@@ -40,7 +40,26 @@ class GooglePhotoSourceImpl extends Source {
     }
 
     getCustomPreferences() {
-        return {};
+        let self = this;
+        return {
+            'Log in': {
+                type: 'button',
+                text: 'Вход в аккаунт',
+                callback: function () {
+                    self.GoogleAuth.signIn().then(function () {
+                    }, function (error) {
+                        if (error) alert('Пожалуйста, разрешите всплывающие окна и обновите страницу')
+                    });
+                }
+            },
+            'Log out': {
+                type: 'button',
+                text: 'Выход из аккаунта',
+                callback: function () {
+                    self.GoogleAuth.signOut();
+                }
+            },
+        };
     }
 
     show() {
@@ -81,3 +100,7 @@ class GooglePhotoSourceImpl extends Source {
     }
 
 }
+
+GooglePhotoSourceImpl.cid = '222308987197-jtfseia6er4a7kjdoced5vkjnsb047bb.apps.googleusercontent.com';
+GooglePhotoSourceImpl.api_key = 'AIzaSyBuAu62CiLDDDNwWFN72YRVoS7Qt8eQ01E';
+GooglePhotoSourceImpl.SCOPE = 'https://www.googleapis.com/auth/photoslibrary.readonly';

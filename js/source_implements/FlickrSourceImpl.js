@@ -1,19 +1,5 @@
 class FlickrSourceImpl extends Source {
 
-    static fURL = 'https://api.flickr.com/services/rest/?';
-    static PRE_PAGE = 100;
-    static DEFAULT_PARAMS = {
-        api_key: '5076d59eeb5ee5a13ad5f2959626a7ce',
-        format: 'json',
-        method: 'flickr.photos.search',
-        text: 'nature',
-        extras: 'original_format',
-        per_page: FlickrSourceImpl.PRE_PAGE,
-        nojsoncallback: 1
-    };
-
-    static solt = '5076hd59eeb5ee5a13ahd5f2959626ah7ce'; //h
-
     getDefaultSettings() {
         return {total: 1, search: 'nature'};
     }
@@ -95,3 +81,17 @@ class FlickrSourceImpl extends Source {
     }
 
 }
+
+FlickrSourceImpl.fURL = 'https://api.flickr.com/services/rest/?';
+FlickrSourceImpl.PRE_PAGE = 100;
+FlickrSourceImpl.DEFAULT_PARAMS = {
+    api_key: '5076d59eeb5ee5a13ad5f2959626a7ce',
+    format: 'json',
+    method: 'flickr.photos.search',
+    text: 'nature',
+    extras: 'original_format',
+    per_page: FlickrSourceImpl.PRE_PAGE,
+    nojsoncallback: 1
+};
+
+FlickrSourceImpl.solt = '5076hd59eeb5ee5a13ahd5f2959626ah7ce'; //h

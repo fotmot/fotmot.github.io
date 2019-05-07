@@ -1,13 +1,8 @@
 class YandexSourceImpl extends Source {
 
-    static URL = 'https://cloud-api.yandex.net:443/v1';
-    static YAD_METHOD_RANDOM = 1;
-    static YAD_METHOD_LAST = 2;
-    static YAD_AUTOLOAD_FOLDER = 'photostream';
-    folders = [];
-
     constructor() {
         super();
+        this.folders = [];
         this.yad = Cookies.get('yad');
         this.checkCache();
         this.checkAuth();
@@ -397,3 +392,8 @@ class YandexSourceImpl extends Source {
         return -1;
     }
 }
+
+YandexSourceImpl.URL = 'https://cloud-api.yandex.net:443/v1';
+YandexSourceImpl.YAD_METHOD_RANDOM = 1;
+YandexSourceImpl.YAD_METHOD_LAST = 2;
+YandexSourceImpl.YAD_AUTOLOAD_FOLDER = 'photostream';

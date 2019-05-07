@@ -11,20 +11,23 @@ mail@x-noname.ru
     <script src="js/jquery-3.4.0.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script>
-        var tokens = /access_token=([^&]+)/.exec(document.location.hash);
-        if (tokens == undefined) {
-            var error = /error=([^&]+)/.exec(document.location.hash)[1];
-            var error_description = /error_description=([^&]+)/.exec(document.location.hash)[1];
-            document.writeln(error + '<br>');
-            document.writeln(decodeURI(error_description) + '<br>');
-            document.writeln('<a href="https://fotmot.ru">Возврат на главную</a><br>');
+        if (document.location.search.includes('google')) {
+            console.log(document.location);
         } else {
-            var token = tokens[1];
-            var exp = /expires_in=([^&]+)/.exec(document.location.hash)[1];
-            Cookies.set('yad', token, {expires: exp / 86400});
-            document.location = "index.html";
+            var tokens = /access_token=([^&]+)/.exec(document.location.hash);
+            if (tokens == undefined) {
+                var error = /error=([^&]+)/.exec(document.location.hash)[1];
+                var error_description = /error_description=([^&]+)/.exec(document.location.hash)[1];
+                document.writeln(error + '<br>');
+                document.writeln(decodeURI(error_description) + '<br>');
+                document.writeln('<a href="https://fotmot.ru">Возврат на главную</a><br>');
+            } else {
+                var token = tokens[1];
+                var exp = /expires_in=([^&]+)/.exec(document.location.hash)[1];
+                Cookies.set('yad', token, {expires: exp / 86400});
+                document.location = "index.html";
+            }
         }
-
     </script>
 </head>
 <body>

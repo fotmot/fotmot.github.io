@@ -1,7 +1,5 @@
 class PixelsSourceImpl extends Source {
 
-    static pURL = 'https://api.pexels.com/';
-    static solt = '5b63b49b2bad6f9170000bb1000001e0ebd2b44cee5943cb991356eabb6b2421b03d7';
 
     getDefaultSettings() {
         return {totalv: 1000, totalp: 1000, fotoVSvideo: 50};
@@ -94,3 +92,6 @@ class PixelsSourceImpl extends Source {
     }
 
 }
+
+PixelsSourceImpl.pURL = 'https://api.pexels.com/';
+PixelsSourceImpl.solt = '5b63b49b2bad6f9170000bb1000001e0ebd2b44cee5943cb991356eabb6b2421b03d7';
