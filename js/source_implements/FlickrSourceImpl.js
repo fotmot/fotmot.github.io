@@ -65,7 +65,7 @@ class FlickrSourceImpl extends Source {
             let uid = data.photos.photo[item].owner;
             let title = data.photos.photo[item].title;
 
-            let autor = `https://www.flickr.com/people/${uid}/${id}`;
+            let autor = `https://www.flickr.com/photos/${uid}/${id}`;
 
             let img = `https://farm${fid}.staticflickr.com/${sid}/${id}_${sec}_b.jpg`;
             if (osec != undefined && ofarm != undefined) {
