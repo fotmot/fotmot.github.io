@@ -22,6 +22,9 @@ class Source {
                 return new YandexSourceImpl();
             case 3:
                 return new FlickrSourceImpl();
+            case 4: {
+                return new GooglePhotoSourceImpl();
+            }
         }
     }
 
