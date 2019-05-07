@@ -118,7 +118,12 @@ class YandexSourceImpl extends Source {
                     item = this.last[this.last_showed++];
                 }
                 if (item.media_type == 'image') {
-                    showImage(item.file, item.exif.date_time);
+                    showImage(item.file, item.exif.date_time, true, function () {
+                        if (self.settingsGetValue('motion_photo') && item.size > 1 * 1024 * 1024) {
+                            console.log('Start extracting');
+                            self.extractVideoAndPlay(item.file, item.exif.date_time);
+                        }
+                    });
                 } else {
                     playVideo(item.file, item.exif.date_time);
                 }
@@ -184,12 +189,12 @@ class YandexSourceImpl extends Source {
                 let item = response._embedded.items[0];
                 if (item != undefined && item.type == 'file') {
                     if (item.media_type == 'image') {
-                        if (self.settingsGetValue('motion_photo') && item.size > 1 * 1024 * 1024) {
-                            self.extractVideoAndPlay(item.file, item.exif.date_time);
-                        } else {
-                            showImage(item.file, item.exif.date_time);
-                        }
-
+                        showImage(item.file, item.exif.date_time, true, function () {
+                            if (self.settingsGetValue('motion_photo') && item.size > 1 * 1024 * 1024) {
+                                console.log('Start extracting');
+                                self.extractVideoAndPlay(item.file, item.exif.date_time);
+                            }
+                        });
                     } else if (item.media_type == 'video') {
                         playVideo(item.file, item.exif.date_time);
                     } else {
@@ -346,6 +351,7 @@ class YandexSourceImpl extends Source {
                 var byteArray = new Uint8Array(this.response);
                 var index = self.findIndex(byteArray);
                 if (index >= 0) {
+                    console.log('extracted');
                     let videoArray = byteArray.slice(index);
                     let blobVideo = new Blob([videoArray], {type: 'video/h264'});
                     let src = window.URL.createObjectURL(blobVideo);
@@ -364,8 +370,7 @@ class YandexSourceImpl extends Source {
                     return;
                 }
             }
-            showImage(file, date_time);
-        }
+        };
         xhr.send();
     }
 

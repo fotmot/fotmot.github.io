@@ -53,7 +53,8 @@ function playVideo(src, html = '', additionalAction) {
     showedTime = (new Date()).getTime();
 }
 
-function showImage(src, html = '', c = true) {
+function showImage(src, html = '', c = true, callback) {
+    console.log('showImage', src.length, c, callback);
     if (video == undefined) return;
     video.off('ended');
     video[0].pause();
@@ -61,7 +62,7 @@ function showImage(src, html = '', c = true) {
         setMeta('<img src="/img/spinner.gif" width="14" height="14"> Loading ... ', src);
         cache.on("load", function () {
             cache.off('load');
-            showImage(src, html, false);
+            showImage(src, html, false, callback);
         });
         cache.attr('src', src);
         return;
@@ -82,6 +83,9 @@ function showImage(src, html = '', c = true) {
     video.attr('poster', "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
     video.data('loaded', true);
     showedTime = (new Date()).getTime();
+    if (callback != undefined) {
+        callback();
+    }
 }
 
 function showSettings() {
