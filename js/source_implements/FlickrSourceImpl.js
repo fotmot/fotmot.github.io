@@ -1,13 +1,14 @@
 class FlickrSourceImpl extends Source {
 
     static fURL = 'https://api.flickr.com/services/rest/?';
+    static PRE_PAGE = 100;
     static DEFAULT_PARAMS = {
         api_key: '5076d59eeb5ee5a13ad5f2959626a7ce',
         format: 'json',
         method: 'flickr.photos.search',
         text: 'nature',
         extras: 'original_format',
-        per_page: 10,
+        per_page: FlickrSourceImpl.PRE_PAGE,
         nojsoncallback: 1
     };
 
@@ -43,14 +44,18 @@ class FlickrSourceImpl extends Source {
 
         params.text = self.settingsGetValue('search');
         let pages = random(1, total, false);
-        params.page = Math.floor(pages / 10);
-        let item = pages % (params.page * 10);
+        params.page = Math.floor(pages / FlickrSourceImpl.PRE_PAGE);
+        let item = pages % (params.page * FlickrSourceImpl.PRE_PAGE);
 
         let url = FlickrSourceImpl.fURL + $.param(params);
         this.sendRequest(url, function (data) {
             if (data.photos.total != undefined && data.photos.total !== self.settingsGetValue('total' + self.settingsGetValue('search'))) {
                 self.settingsSetValue('total' + self.settingsGetValue('search'), data.photos.total);
             }
+            while (data.photos.photo[item] == undefined && item > 0) {
+                item = item - 1;
+            }
+
             let fid = data.photos.photo[item].farm;
             let sid = data.photos.photo[item].server;
             let id = data.photos.photo[item].id;
