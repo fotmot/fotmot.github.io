@@ -38,7 +38,7 @@ function playVideo(src, html = '', additionalAction) {
     video.off('ended');
     video.on('ended', function () {
         video.off('ended');
-        startLoop();
+        startLoop(undefined, true);
     });
     video.data('prev-type', 'video');
     video.data('prev-src', src);
@@ -237,7 +237,7 @@ $(function () {
     startLoop = function (srcObject, forceNext = false) {
         clearTimeout(timer);
         let curTime = (new Date()).getTime();
-        let porog = (showedTime + interval) - 2000;
+        let porog = (showedTime + interval) - 3000;
         let timeout = interval;
         if (!isPaused && video.data('loaded') == true && ((porog < curTime) || forceNext)) {
             video.data('loaded', 'false');

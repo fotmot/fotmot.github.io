@@ -52,9 +52,13 @@ class FlickrSourceImpl extends Source {
             if (data.photos.total != undefined && data.photos.total !== self.settingsGetValue('total' + self.settingsGetValue('search'))) {
                 self.settingsSetValue('total' + self.settingsGetValue('search'), data.photos.total);
             }
+
             while (data.photos.photo[item] == undefined && item > 0) {
+                console.log(item);
                 item = item - 1;
+                console.log(item);
             }
+
 
             let fid = data.photos.photo[item].farm;
             let sid = data.photos.photo[item].server;
@@ -83,7 +87,7 @@ class FlickrSourceImpl extends Source {
         xhr.onreadystatechange = function (data) {
             data = data.currentTarget;
             if (data.status == 200 && data.readyState == 4) {
-                var data = JSON.parse(data.responseText);
+                var data = JSON.parse(data.response);
                 callback(data);
             }
         };

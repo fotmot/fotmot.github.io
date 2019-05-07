@@ -66,7 +66,11 @@ class PixelsSourceImpl extends Source {
                 page: random(1, this.settingsGetValue(settings_key), false)
             });
             this.sendRequest(settings_key, url, function (data) {
-                playVideo(data.videos[0].video_files[0].link, `Pixels.com: <a href='${data.videos[0].url}'>video url</a>`);
+                let video_files = data.videos[0].video_files.sort(function (prev, next) {
+                    return prev.width > next.width;
+                });
+                console.log(video_files[0]);
+                playVideo(video_files[0].link, `Pixels.com: <a href='${data.videos[0].url}'>video url</a>`);
             });
         }
     }

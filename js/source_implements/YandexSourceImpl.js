@@ -102,24 +102,15 @@ class YandexSourceImpl extends Source {
                 this.loadFolder();
             }
         } else if (this.settingsGetValue('method') == YandexSourceImpl.YAD_METHOD_LAST) {
-            if (this.last.length == 0) {
+            if (this.last.length == 0 || this.last == undefined) {
                 //fields:items.exif,items.file,items.media_type
                 //limit
                 //media_type image,video
-                this.getLastUploaded({
-                    fields: 'items.exif,items.file,items.media_type',
-                    limit: 1000,
-                    media_type: 'image,video'
-                }, function (resp) {
-                    self.last = resp.items;
-                    show();
-                }, function (jqXHR) {
-                    if (jqXHR.status == 401 || jqXHR.status == 401) {
-                        self.autorize();
-                    } else {
-                        self.chooseFolder();
-                    }
-                })
+                this.updateLasts(5, function () {
+                    self.last_showed = 0;
+                    self.show();
+                    self.updateLasts(1000);
+                });
             } else {
                 let item = this.last[this.last_showed++];
                 if (item == undefined) {
@@ -133,6 +124,26 @@ class YandexSourceImpl extends Source {
                 }
             }
         }
+    }
+
+    updateLasts(limit, callback) {
+        let self = this;
+        this.getLastUploaded({
+            fields: 'items.exif,items.file,items.media_type',
+            limit: limit,
+            media_type: 'image,video'
+        }, function (resp) {
+            self.last = resp.items;
+            if (callback != undefined) {
+                callback();
+            }
+        }, function (jqXHR) {
+            if (jqXHR.status == 401 || jqXHR.status == 401) {
+                self.autorize();
+            } else {
+                self.chooseFolder();
+            }
+        });
     }
 
     loadFolder(folder) {
