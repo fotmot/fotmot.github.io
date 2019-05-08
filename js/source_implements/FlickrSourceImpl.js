@@ -45,6 +45,12 @@ class FlickrSourceImpl extends Source {
                 console.log(item);
             }
 
+            while (data.photos.photo[item] == undefined && item >= data.photos.photo.length) {
+                console.log(item);
+                item = item + 1;
+                console.log(item);
+            }
+
 
             let fid = data.photos.photo[item].farm;
             let sid = data.photos.photo[item].server;

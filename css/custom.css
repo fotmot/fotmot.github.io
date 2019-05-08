@@ -27,7 +27,7 @@ header {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     z-index: 0;
-    object-fit: scale-down;
+    object-fit: contain;
 }
 
 #container div {
