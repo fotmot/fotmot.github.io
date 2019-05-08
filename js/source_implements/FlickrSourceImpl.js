@@ -38,19 +38,10 @@ class FlickrSourceImpl extends Source {
             if (data.photos.total != undefined && data.photos.total !== self.settingsGetValue('total' + self.settingsGetValue('search'))) {
                 self.settingsSetValue('total' + self.settingsGetValue('search'), data.photos.total);
             }
-
-            while (data.photos.photo[item] == undefined && item > 0) {
-                console.log(item);
-                item = item - 1;
-                console.log(item);
+            if(data.photos.photo[item]==undefined){
+                show();
+                return;
             }
-
-            while (data.photos.photo[item] == undefined && item >= data.photos.photo.length) {
-                console.log(item);
-                item = item + 1;
-                console.log(item);
-            }
-
 
             let fid = data.photos.photo[item].farm;
             let sid = data.photos.photo[item].server;
