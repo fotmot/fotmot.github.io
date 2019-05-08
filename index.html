@@ -45,15 +45,19 @@
     </video>
     <div id="overlay"><span id="sbut" onclick="toggleSettings()">&#9776;</span><span id="meta"></span></div>
     <div id="settings">
-        <label for="sel_method">Выбрать источник</label>
-        <select id="sel_method" onchange="changeMethod(this.value);">
-            <option value="1">Pixels.com</option>
-            <option value="2">Yandex.Disk</option>
-            <option value="3">Flickr</option>
-            <option value="4">Google Photo</option>
-        </select>
-        <div id="custom_prefs"></div>
-        <div id="jstree"></div>
+        <div id="settings_container">
+            <div class="field">
+                <label for="sel_method">Выбрать источник</label>
+                <select id="sel_method" onchange="changeMethod(this.value);">
+                    <option value="1">Pixels.com</option>
+                    <option value="2">Yandex.Disk</option>
+                    <option value="3">Flickr</option>
+                    <option value="4">Google Photo</option>
+                </select>
+            </div>
+            <div id="custom_prefs"></div>
+            <div id="jstree"></div>
+        </div>
     </div>
 
 </div>

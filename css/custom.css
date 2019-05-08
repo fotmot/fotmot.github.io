@@ -58,10 +58,6 @@ header {
     padding: 5%;
 }
 
-select, button {
-    font-size: xx-large;
-}
-
 #sbut {
     padding: 0 5px 0 0;
     background-color: azure;
@@ -73,10 +69,14 @@ select, button {
 #jstree {
     font-size: large;
     background-color: #cccccc;
-    margin: 20px;
     border-style: inset;
     overflow-y: scroll;
-    height: 70%;
+    height: 200px;
     display: none;
 }
 
+.field {clear:both; text-align:right;line-height:25px;}
+.field>label {float:left;padding-right:50px;}
+#settings_container {
+    float:left
+}

@@ -93,6 +93,7 @@ function showSettings() {
     div_custom_pref.html("");
     Object.keys(custom_pref).forEach(function (key) {
         let item = custom_pref[key];
+        let div = $('<div/>',{class:'field'});
         if (item.type == 'multi') {
             item.controls.forEach(function (i, index) {
                 let before = '';
@@ -103,11 +104,12 @@ function showSettings() {
                 if (index == item.controls.length - 1) {
                     after = '<br/>';
                 }
-                drawItem(i, div_custom_pref, before, after);
+                drawItem(div, i, div_custom_pref, before, after);
             })
         } else {
-            drawItem(item, div_custom_pref, `<label>${key}: </label>`, '<br/>');
+            drawItem(div, item, div_custom_pref, `<label>${key}: </label>`, '<br/>');
         }
+        div.appendTo(div_custom_pref);
     });
 }
 
@@ -145,7 +147,7 @@ function toggleSettings() {
 
 }
 
-function drawItem(item, div_custom_pref, before, after) {
+function drawItem(div, item, div_custom_pref, before, after) {
     let control = undefined;
     if (item.type == 'select') {
         control = $('<select/>', {change: item.callback});
@@ -180,7 +182,7 @@ function drawItem(item, div_custom_pref, before, after) {
         control = $('<input/>', {type: 'checkbox', change: item.callback});
     }
 
-    control.appendTo(div_custom_pref).before(before).after(after);
+    control.appendTo(div).before(before).after(after);
     if (item.attr !== undefined) {
         item.attr.forEach(function (attr) {
             control.attr(attr.key, attr.value);
