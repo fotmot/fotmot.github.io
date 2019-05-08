@@ -39,7 +39,7 @@ class FlickrSourceImpl extends Source {
                 self.settingsSetValue('total' + self.settingsGetValue('search'), data.photos.total);
             }
             if(data.photos.photo[item]==undefined){
-                show();
+                self.show();
                 return;
             }
 
