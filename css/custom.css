@@ -48,8 +48,7 @@ header {
 #settings {
     background-color: beige;
     width: 80%;
-    height: 65%;
-    min-height: 480px;
+    height: 55%;
     left: -100%;
     top: 5%;
     display: none;
@@ -75,8 +74,17 @@ header {
     display: none;
 }
 
-.field {clear:both; text-align:right;line-height:25px;}
-.field>label {float:left;padding-right:50px;}
+.field {
+    clear: both;
+    text-align: right;
+    line-height: 25px;
+}
+
+.field > label {
+    float: left;
+    padding-right: 200px;
+}
+
 #settings_container {
-    float:left
+    float: left
 }
