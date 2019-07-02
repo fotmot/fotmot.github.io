@@ -90,7 +90,7 @@ header {
 }
 
 #video{
-    backface-visibility: hidden;
-    background-repeat: no-repeat;
-    background-position: center center;
+    backface-visibility: hidden !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
 }

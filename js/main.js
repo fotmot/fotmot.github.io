@@ -53,7 +53,7 @@ function playVideo(src, html = '', additionalAction) {
     showedTime = (new Date()).getTime();
 }
 
-function maximize(elm){
+function maximize(elm) {
     elm.css({
         backgroundSize: 'auto ' + window.innerHeight + 'px'
     });
@@ -78,11 +78,11 @@ function showImage(src, html = '', c = true, callback) {
     video.css({
         background: 'transparent url("' + src + '")',
     });
-    if(!cssIsSetted){
-        cssIsSetted=true;
+    if (!cssIsSetted) {
+        cssIsSetted = true;
         maximize(video);
-        $( window ).resize(function() {
-            maximize(video);
+        $(window).resize(function () {
+            cssIsSetted = false;
         });
     }
     video.attr('autoplay', false);
@@ -104,7 +104,7 @@ function showSettings() {
     div_custom_pref.html("");
     Object.keys(custom_pref).forEach(function (key) {
         let item = custom_pref[key];
-        let div = $('<div/>',{class:'field'});
+        let div = $('<div/>', {class: 'field'});
         if (item.type == 'multi') {
             item.controls.forEach(function (i, index) {
                 let before = '';
