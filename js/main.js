@@ -68,7 +68,7 @@ function showImage(src, html = '', c = true, callback) {
     }
     setMeta(html, src);
     video.css({
-        background: 'transparent url("' + src + '") 0% 0% / auto ' + window.innerHeight + 'px transparent',
+        background: 'url("' + src + '") 0% 0% / auto ' + window.innerHeight + 'px transparent',
     });
 
     video.attr('autoplay', false);
