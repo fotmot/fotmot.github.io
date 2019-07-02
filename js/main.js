@@ -53,14 +53,6 @@ function playVideo(src, html = '', additionalAction) {
     showedTime = (new Date()).getTime();
 }
 
-function maximize(elm) {
-    elm.css({
-        backgroundSize: 'auto ' + window.innerHeight + 'px'
-    });
-}
-
-let cssIsSetted = false;
-
 function showImage(src, html = '', c = true, callback) {
     if (video == undefined) return;
     video.off('ended');
@@ -76,15 +68,9 @@ function showImage(src, html = '', c = true, callback) {
     }
     setMeta(html, src);
     video.css({
-        background: 'transparent url("' + src + '")',
+        background: 'transparent url("' + src + '") 0% 0% / auto ' + window.innerHeight + 'px transparent;',
     });
-    if (!cssIsSetted) {
-        cssIsSetted = true;
-        maximize(video);
-        $(window).resize(function () {
-            cssIsSetted = false;
-        });
-    }
+
     video.attr('autoplay', false);
     video.attr('controls', false);
     video.data('prev-type', 'image');
