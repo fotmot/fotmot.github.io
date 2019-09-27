@@ -65,7 +65,7 @@ function showImage(src, html = '', c = true, callback) {
                 showImage(src, html, false, callback);
             } else {
                 if (current_method === METHOD_YANDEX) {
-                    localStorage.removeItem('settings_YandexSourceImpl');
+                    document.cookie = 'yad=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                     location.reload();
                 }
             }
