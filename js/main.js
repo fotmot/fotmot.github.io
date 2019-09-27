@@ -61,7 +61,14 @@ function showImage(src, html = '', c = true, callback) {
         setMeta('<img src="/img/spinner.gif" width="14" height="14"> Loading ... ', src);
         cache.on("load", function () {
             cache.off('load');
-            showImage(src, html, false, callback);
+            if (cache.complete) {
+                showImage(src, html, false, callback);
+            } else {
+                if (current_method === METHOD_INTERNET) {
+                    localStorage.removeItem('settings_YandexSourceImpl');
+                    location.reload();
+                }
+            }
         });
         cache.attr('src', src);
         return;
@@ -93,7 +100,7 @@ function showSettings() {
     div_custom_pref.html("");
     Object.keys(custom_pref).forEach(function (key) {
         let item = custom_pref[key];
-        let div = $('<div/>',{class:'field'});
+        let div = $('<div/>', {class: 'field'});
         if (item.type == 'multi') {
             item.controls.forEach(function (i, index) {
                 let before = '';
