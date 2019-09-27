@@ -88,3 +88,9 @@ header {
 #settings_container {
     float: left
 }
+
+#video{
+    backface-visibility: hidden !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}

@@ -74,13 +74,12 @@ function showImage(src, html = '', c = true, callback) {
         return;
     }
     setMeta(html, src);
+    console.log('url("' + src + '") 0% 0% / auto ' + window.innerHeight + 'px transparent');
     video.css({
-        background: 'transparent url("' + src + '")',
-        backfaceVisibility: 'transparent',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center',
-        backgroundSize: 'auto ' + window.innerHeight + 'px'
+        background: 'url("' + src + '") 0% 0% / auto ' + window.innerHeight + 'px transparent',
     });
+    console.log('done');
+
     video.attr('autoplay', false);
     video.attr('controls', false);
     video.data('prev-type', 'image');
