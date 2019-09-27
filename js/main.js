@@ -61,7 +61,7 @@ function showImage(src, html = '', c = true, callback) {
         setMeta('<img src="/img/spinner.gif" width="14" height="14"> Loading ... ', src);
         cache.on("load", function () {
             cache.off('load');
-            if (cache.complete) {
+            if (cache[0].complete) {
                 showImage(src, html, false, callback);
             } else {
                 if (current_method === METHOD_YANDEX) {
