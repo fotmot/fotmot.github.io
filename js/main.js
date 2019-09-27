@@ -61,14 +61,7 @@ function showImage(src, html = '', c = true, callback) {
         setMeta('<img src="/img/spinner.gif" width="14" height="14"> Loading ... ', src);
         cache.on("load", function () {
             cache.off('load');
-            if (cache[0].complete) {
-                showImage(src, html, false, callback);
-            } else {
-                if (current_method === METHOD_YANDEX) {
-                    document.cookie = 'yad=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-                    location.reload();
-                }
-            }
+            showImage(src, html, false, callback);
         });
         cache.attr('src', src);
         return;
@@ -224,6 +217,12 @@ $(function () {
     overlay = $("#meta");
     container = $("#container");
     cache = $("#cache");
+    cache.on("error", function () {
+        if (current_method === METHOD_YANDEX) {
+            document.cookie = 'yad=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            location.reload();
+        }
+    });
     setMeta('← Выбрать источник');
     setPrevNextBindings();
     $(document).dblclick(function () {
