@@ -217,12 +217,6 @@ $(function () {
     overlay = $("#meta");
     container = $("#container");
     cache = $("#cache");
-    cache.on("error", function () {
-        if (current_method === METHOD_YANDEX) {
-            document.cookie = 'yad=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-            location.reload();
-        }
-    });
     setMeta('← Выбрать источник');
     setPrevNextBindings();
     $(document).dblclick(function () {
