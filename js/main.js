@@ -64,7 +64,7 @@ function showImage(src, html = '', c = true, callback) {
             if (cache.complete) {
                 showImage(src, html, false, callback);
             } else {
-                if (current_method === METHOD_INTERNET) {
+                if (current_method === METHOD_YANDEX) {
                     localStorage.removeItem('settings_YandexSourceImpl');
                     location.reload();
                 }
